@@ -25,9 +25,11 @@ def sign_up():
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
 
+        # check that the email and username are unique
         email_exists = User.query.filter_by(email=email).first()
         username_exists = User.query.filter_by(username=username).first()
 
+        # validation of password, username, and email
         if email_exists:
             flash('Email is already in use.', category='error')
         elif username_exists:
