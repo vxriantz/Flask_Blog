@@ -53,10 +53,31 @@ def sign_up():
     return render_template("sign_up.html")
 
 # login route
-@auth.route("/login")
+@auth.route("/login", methods=['GET', 'POST'])
 # login function
 # returns login page
 def login():
+    # gets email and password from login form
+    if request.method == 'POST':
+        email = request.form.get("email")
+        password = request.form.get("password")
+        # queries database to receive user information using email address
+        user = User.query.filter_by(email=email).first()
+        # checks email and password
+        if user:
+            # if correct log in user and redirect to home page
+            if check_password_hash(user.password, password):
+                flash('Logged In!', category='success')
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            # if incorrect password flash error
+            else:
+                flash('Incorrect password!', category='error')
+        # if incorrect email flash error
+        else:
+            flash('Email does not exist!', category='error')
+
+
     return render_template("login.html")
 
 # logout route
