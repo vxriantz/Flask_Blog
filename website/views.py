@@ -1,12 +1,17 @@
 # import external libraries
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, logout_user, login_required, current_user
+
 # import database
 from . import db
+
 # import from .models user
 from .models import User, Post, Comment
+
 #set views blueprint
 views = Blueprint("views", __name__)
+
+
 
 # default / home route
 @views.route("/")
@@ -24,7 +29,7 @@ def home():
 # home route function
 # returns home.html
 def blog():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.date_created.desc())
     return render_template("blog.html", user=current_user, posts=posts)
 
 
@@ -67,6 +72,20 @@ def delete_post(id):
         db.session.commit()
         flash('Post deleted!', category='success')
     return redirect(url_for('views.blog'))
+
+
+
+#view user posts route
+@views.route("/posts/<username>")
+@login_required
+def posts(username):
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        flash('No user with that username exists', category='error')
+        return redirect(url_for('views.blog'))
+    posts = user.posts
+    return render_template("posts.html", user=current_user, posts=posts, username=username)
+
 
 
 # blog comment route
