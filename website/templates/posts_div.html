@@ -46,8 +46,18 @@
         </div>
         <!-- start comment code -->
         <br/>
-        <div class="collapse" id="comments-{{post.id}}">
-            <div class="card">
+        <p class="card-text ms-3">
+            {% if post.comments|length > 0 %}
+            <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+                <small>View {{post.comments|length}} Comments</small>
+            </a>
+            {% else %}
+            <small class="text-muted">No comments</small>
+            {% endif %}
+        </p>
+        
+        <div class="collapse mt-2" id="comments-{{post.id}}">
+            <div class="card card-body" id="comments-expanded-{{post.id}}">
                 <div class="card-body" id="comments-expanded-{{post.id}}">
                     {% for comment in post.comments %}
                     <div class="d-flex justify-content-between align-items-center">
@@ -72,15 +82,6 @@
                 </div>
             </div>
         </div>
-        <p class="card-text">
-            {% if post.comments|length > 0 %}
-            <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
-                <small>View {{post.comments|length}} Comments</small>
-            </a>
-            {% else %}
-            <small class="text-muted">No comments</small>
-            {% endif %}
-        </p>
         <!-- comment input form -->
         <form class="input-group mb-3" method="POST" action="/create-comment/{{post.id}}">
             <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!"/>
