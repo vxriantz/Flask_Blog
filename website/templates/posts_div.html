@@ -95,10 +95,15 @@
 <!-- pagination code start -->
 {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
 {% if page_num %}
-{% if posts.page == page_num %}
-<a class="btn btn-info mb-4" href="{{url_for('views.blog', page=page_num)}}">{{page_num}}</a>
+{% if endpoint == 'views.posts' %}
+{% set page_url = url_for(endpoint, username=username, page=page_num) %}
 {% else %}
-<a class="btn btn-outline-info mb-4" href="{{url_for('views.blog', page=page_num)}}">{{page_num}}</a>
+{% set page_url = url_for(endpoint, page=page_num) %}
+{% endif %}
+{% if posts.page == page_num %}
+<a class="btn btn-info mb-4" href="{{ page_url }}">{{page_num}}</a>
+{% else %}
+<a class="btn btn-outline-info mb-4" href="{{ page_url }}">{{page_num}}</a>
 {% endif %}
 {% else %}
 ...
