@@ -8,7 +8,9 @@
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Update Post</legend>
+            <br/>
+            <h1>{% block header %} Update Post {% endblock %}</h1>
+            <br/>
             <div class="form-group">
                 {{ form.title.label(class="form-control-label") }}
                 {% if form.title.errors %}
@@ -29,9 +31,9 @@
             <div class="form-group">
                 {{ form.content.label(class="form-control-label") }}
                 {% if form.content.errors %}
-                    {{ form.text(class="form-control form-control-lg is-invalid") }}
+                    {{ form.content(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.text.errors %}
+                        {% for error in form.content.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
