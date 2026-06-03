@@ -176,3 +176,12 @@ def like(post_id):
         db.session.commit()
 
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
+
+
+
+# contact route
+@views.route("/contact")
+# contact route function
+# returns contact.html
+def contact():
+    return render_template("contact.html", user=current_user)
