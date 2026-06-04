@@ -2,6 +2,7 @@
 # import external libraries
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
+from datetime import datetime, date, timedelta
 
 # import database
 from . import db
@@ -10,7 +11,7 @@ from . import db
 from .models import User, Post, Comment, Like
 
 # import from .forms
-from .forms import PostForm
+from .forms import PostForm, UserPermissionUpdateForm
 
 #set views blueprint
 views = Blueprint("views", __name__)
@@ -35,6 +36,22 @@ def blog():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
     return render_template("blog.html", user=current_user, posts=posts, endpoint='views.blog')
+
+
+
+# user permissions page route
+@views.route("/permissions")
+# must be logged in to acces th page
+@login_required
+# permissions route function
+# returns permissions.html
+def permissions():
+    if current_user.role != "Admin":
+        flash("Access Denied", category='error')
+        return redirect(url_for('views.studenthome'))
+    
+    users= User.query.all()
+    return render_template("permissions.html", user=current_user, users=users)
 
 
 

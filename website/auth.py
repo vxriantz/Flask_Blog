@@ -11,6 +11,14 @@ from .models import User
 # set auth blueprint
 auth = Blueprint("auth", __name__)
 
+def get_user_role(email):
+    if email.endswith("@sanctamaria.school.nz"):
+        return "Admin"
+    if email.endswith("@my.sanctamaria.school.nz"):
+        return "Student"
+    else:
+        return "Other"
+
 
 # sign-up route
 @auth.route("/sign-up", methods=['GET', 'POST'])
