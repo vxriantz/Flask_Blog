@@ -29,8 +29,10 @@ def sign_up():
     # returns signup_page
     if request.method == 'POST':
         email = request.form.get("email")
-        role = get_user_role(email)
+        fname = request.form.get("fname")
+        lname = request.form.get("lname")
         username = request.form.get("username")
+        role = get_user_role(email)
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
 
@@ -52,7 +54,7 @@ def sign_up():
         elif len(email) < 4:
             flash('Email is not valid.', category='error')
         else:
-            new_user = User(email=email, username=username, password=generate_password_hash(password1, method='scrypt:32768:8:1'))
+            new_user = User(email=email, fname=fname, lname=lname, username=username, role=role, password=generate_password_hash(password1, method='scrypt:32768:8:1'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)

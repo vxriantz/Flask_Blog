@@ -17,70 +17,80 @@
         <!-- navbar -->
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#"></a>
+              <a class="navbar-brand" href="/home"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="'navbar-brand"><img src="static/img/schoollogo.jpg" width="45px" height="45px"></a>
+                      <a class="navbar-brand" href="/home">
+                          <img src="static/img/schoollogo.jpg" width="45px" height="45px">
+                      </a>
                   </li>
+                  <!-- Always visible -->
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                      <a class="nav-link active" href="/home">Home</a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/contact">Contact</a>
-                  </li>
+
                   {% if user.is_authenticated %}
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Book an Appointment
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Placeholder</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Placeholder</a></li>
-                      <li><a class="dropdown-item" href="#">Placeholder</a></li>
-                    </ul>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/blog">Blog</a>
                   </li>
-                  <!-- Only show nav links if user is admin -->
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button"
+                          data-bs-toggle="dropdown">
+                          Book an Appointment
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Placeholder</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Placeholder</a></li>
+                          <li><a class="dropdown-item" href="#">Placeholder</a></li>
+                      </ul>
+                  </li>
+
                   {% if current_user.role == "Admin" %}
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Admin
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Notification Center (Placeholder)</a></li>
-                      <li><a class="dropdown-item" href="/permissions">Permissions</a></li>
-                    </ul>
+                      <a class="nav-link dropdown-toggle" href="#" role="button"
+                          data-bs-toggle="dropdown">
+                          Admin
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Notification Center (Placeholder)</a></li>
+                          <li><a class="dropdown-item" href="/permissions">Permissions</a></li>
+                      </ul>
                   </li>
                   {% endif %}
-                  {% else %}
-                  <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/sign-up">Sign Up</a>
-                  </li>
                   {% endif %}
+                  <!-- Contact always appears last on left side -->
+                  <li class="nav-item">
+                      <a class="nav-link" href="/contact">Contact</a>
+                  </li>
                 </ul>
                 
+                <ul class="navbar-nav ms-auto align-items-center">
                 {% if user.is_authenticated %}
-                  <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                      <span class="navbar-text">
-                        Logged in as <strong>{{ user.username }} ({{user.role}})</strong>
-                      </span>
-                    </li>
-                  </ul>
-                  <ul class="navbar-nav">
+                <li class="nav-item">
+                    <span class="navbar-text">
+                        Logged in as <strong>{{ user.username }} ({{ user.role }})</strong>
+                    </span>
+                </li>
+                <li class="nav-item mx-2">
                     <span class="navbar-text">|</span>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/logout">Logout</a>
-                    </li>
-                  </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-0" href="/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/sign-up">Sign Up</a>
+                </li>
                 {% endif %}
+                </ul>
               </div>
             </div>
           </nav> 

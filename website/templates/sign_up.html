@@ -9,11 +9,18 @@
 <br/>
 <!-- start of form -->
  <form method="POST">
-    <div clas="form-group">
+    <div class="form-group">
         <!-- email form -->
          <label for="email">Email Address</label>
          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" />
         <br/>
+        <!-- first and last name form -->
+         <label for="fname">First Name</label>
+        <input type="text" id="fname" name="fname" minlength="2" class="form-control" required placeholder="Enter First Name" />
+        <br/>
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lname" minlength="2" class="form-control" required placeholder="Enter Last Name" />
+        <br />
          <!-- username form -->
          <label for="username">Username</label>
          <input type="text" id="username" name="username" class="form-control" placeholder="Enter Username" />
