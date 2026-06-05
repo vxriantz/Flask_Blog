@@ -29,6 +29,7 @@ def sign_up():
     # returns signup_page
     if request.method == 'POST':
         email = request.form.get("email")
+        role = get_user_role(email)
         username = request.form.get("username")
         password1 = request.form.get("password1")
         password2 = request.form.get("password2")
@@ -95,4 +96,4 @@ def login():
 # returns logout page
 def logout():
     logout_user()
-    return redirect(url_for('views.home'))
+    return redirect(url_for('auth.login'))
