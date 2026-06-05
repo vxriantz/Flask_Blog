@@ -12,9 +12,16 @@ from .models import User
 auth = Blueprint("auth", __name__)
 
 def get_user_role(email):
-    if email.endswith("@sanctamaria.school.nz"):
-        return "Admin"
-    if email.endswith("@my.sanctamaria.school.nz"):
+    counsellors = [
+        "e.purchase@sanctamaria.school.nz",
+        "c.didierserre@sanctamaria.school.nz",
+        "m.mack@sanctamaria.school.nz"
+    ]
+    if email in counsellors:
+        return "Guidance Counsellor"
+    elif email.endswith("@sanctamaria.school.nz"):
+        return "Teacher"
+    elif email.endswith("@my.sanctamaria.school.nz"):
         return "Student"
     else:
         return "Other"
