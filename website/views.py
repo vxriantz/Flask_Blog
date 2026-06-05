@@ -46,7 +46,7 @@ def blog():
 # permissions route function
 # returns permissions.html
 def permissions():
-    if current_user.role != "Admin":
+    if current_user.role != "Guidance Counsellor":
         flash("Access Denied", category='error')
         return redirect(url_for('views.studenthome'))
     

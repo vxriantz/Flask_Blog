@@ -12,5 +12,5 @@ class PostForm(FlaskForm):
     submit = SubmitField('Post')
 
 class UserPermissionUpdateForm(FlaskForm):
-    role = RadioField("Role", choices=[('Admin'), ('Teacher'), ('Student')],validators=[DataRequired()])
+    role = RadioField("Role", choices=[('Guidance Counsellor'), ('Teacher'), ('Student')],validators=[DataRequired()])
     submit = SubmitField('Update')
