@@ -48,7 +48,7 @@ def blog():
 def permissions():
     if current_user.role != "Guidance Counsellor":
         flash("Access Denied", category='error')
-        return redirect(url_for('views.studenthome'))
+        return redirect(url_for('views.home'))
     
     users= User.query.all()
     return render_template("permissions.html", user=current_user, users=users)
@@ -120,6 +120,32 @@ def update_post(id):
         form.content.data = post.content
 
     return render_template("update_post.html", form=form, user=current_user)
+
+
+
+# update user permissions route
+@views.route("/update-user/<id>", methods=['GET', 'POST'])
+# user must be logged into an admin (guidance counsellor) account to edt user permissions
+@login_required
+def update_user(id):
+    if current_user.role != "Guidance Counsellor":
+        flash("Access Denied", category='error')
+        return redirect(url_for('views.home'))
+        
+    user = User.query.filter_by(id=id).first()
+    form = UserPermissionUpdateForm()
+    if form.validate_on_submit():
+        user.role = form.role.data
+        db.session.commit()
+        flash("User permissions updated!", category="success")
+        page = request.args.get('page', 1, type=int)
+        posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
+        return redirect(url_for('views.permissions'))
+        
+    elif request.method =='GET':
+        form.role.data = user.role
+        
+    return render_template("update_permissions.html", form=form, user=current_user, posts=user)
 
 
 
