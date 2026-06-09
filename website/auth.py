@@ -24,7 +24,7 @@ def get_user_role(email):
     elif email.endswith("@my.sanctamaria.school.nz"):
         return "Student"
     else:
-        return "Other"
+        return "Other" # change this so users without a school email cannot get in
 
 
 # sign-up route

@@ -162,6 +162,7 @@ def posts(username):
     return render_template("posts.html", user=current_user, posts=posts, username=username, endpoint='views.posts')
 
 
+
 # blog comment route
 @views.route("/create-comment/<post_id>", methods=['POST'])
 # user must be logged in to create comment
@@ -183,6 +184,7 @@ def create_comment(post_id):
     return redirect(url_for('views.blog'))
 
 
+
 # delete comment route
 @views.route("/delete-comment/<comment_id>")
 # user must be logged in to delete comment
@@ -198,6 +200,23 @@ def delete_comment(comment_id):
         db.session.commit()
         flash('Comment deleted!', category='success')
     return redirect(url_for('views.blog'))
+
+
+
+# delete user route
+@views.route("/delete-user/<id>")
+# must be logged in to access the page
+@login_required
+def delete_user(id):
+    if current_user.role != "Guidance Counsellor":
+        flash("Access Denied", category='error')
+        return redirect(url_for('views.home'))
+        
+    user = User.query.filter_by(id=id).first()
+    db.session.delete(user)
+    db.session.commit()
+    flash('User Removed!', category='success')
+    return redirect(url_for('views.permissions'))
 
 
 
