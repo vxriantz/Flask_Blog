@@ -1,6 +1,6 @@
 <!-- page extends to posts_div.html -->
-{% extends "posts_div.html"%} {% block title %} {{username}}'s Posts {% endblock %}
-{% block header %} {{username}}'s Posts {% endblock %}
+{% extends "posts_div.html"%} {% block title %} {{ user.fname }} {{ user.lname[0] }}.'s Posts {% endblock %}
+{% block header %} {{ user.fname }} {{ user.lname[0] }}.'s Posts {% endblock %}
 
 {% block footer %}
 

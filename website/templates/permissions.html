@@ -5,11 +5,19 @@
   <br/>
   <h1>{% block header %} User Permissions {% endblock %}</h1>
   <br/>
+
+    <p>
+        <strong>Guidance Counsellors:</strong> {{ counsellor_count }}
+        &nbsp;|&nbsp;
+        <strong>Teachers:</strong> {{ teacher_count }}
+        &nbsp;|&nbsp;
+        <strong>Students:</strong> {{ student_count }}
+    </p>
+    <br/>
   
   <table class="table table-hover">
         <tr>
             <!-- headings for table -->
-            <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
@@ -19,7 +27,6 @@
         {% for user in users %}
         <tr>
             <!-- content for table based on how many users are in the database -->
-            <th>#{{user.id}}</th>
             <th>{{user.fname}}</th>
             <th>{{user.lname}}</th>
             <th>{{user.email}}</th>

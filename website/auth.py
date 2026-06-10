@@ -36,8 +36,8 @@ def sign_up():
     # returns signup_page
     if request.method == 'POST':
         email = request.form.get("email")
-        fname = request.form.get("fname")
-        lname = request.form.get("lname")
+        fname = request.form.get("fname").strip().title()
+        lname = request.form.get("lname").strip().title()
         username = request.form.get("username")
         role = get_user_role(email)
         password1 = request.form.get("password1")

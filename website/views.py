@@ -41,7 +41,7 @@ def blog():
 
 # user permissions page route
 @views.route("/permissions")
-# must be logged in to acces th page
+# must be logged in to access the page
 @login_required
 # permissions route function
 # returns permissions.html
@@ -49,9 +49,37 @@ def permissions():
     if current_user.role != "Guidance Counsellor":
         flash("Access Denied", category='error')
         return redirect(url_for('views.home'))
+
+    users = User.query.all()
+    # custom role order
+    role_order = {
+        "Guidance Counsellor": 1,
+        "Teacher": 2,
+        "Student": 3
+    }
     
-    users= User.query.all()
-    return render_template("permissions.html", user=current_user, users=users)
+    # sort by role, then surname, then first name
+    users.sort(
+        key=lambda u: (
+            role_order.get(u.role, 99),
+            u.lname.lower(),
+            u.fname.lower()
+        )
+    )
+
+    # user counts for dashboard statistics
+    counsellor_count = sum(1 for user in users if user.role == "Guidance Counsellor")
+    teacher_count = sum(1 for user in users if user.role == "Teacher")
+    student_count = sum(1 for user in users if user.role == "Student")
+
+    return render_template(
+        "permissions.html",
+        user=current_user,
+        users=users,
+        counsellor_count=counsellor_count,
+        teacher_count=teacher_count,
+        student_count=student_count
+    )
 
 
 
