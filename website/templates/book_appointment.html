@@ -1,0 +1,96 @@
+<!-- page extends to template.html -->
+{% extends "template.html" %} {% block title %} Book Appointment {% endblock %}
+
+<!-- book an appointment page content -->
+{% block content %}
+<label>Guidance Counsellor</label>
+<select name="counsellor_id" class="form-control" required>
+
+<option value="any">
+No preference (any counsellor)
+</option>
+
+<!--  -->
+{% for user in counsellors %}
+{% if user.role == "Guidance Counsellor" %}
+<option value="{{ user.id }}">
+{{ user.fname }} {{ user.lname }}
+</option>
+{% endif %}
+{% endfor %}
+
+</select>  
+    <!--  -->
+    <option value="">
+        Select Counsellor
+    </option>
+
+    <!--  -->
+    <option value="Eleanor Purchase">
+        Eleanor Purchase
+    </option>
+
+    <!--  -->
+    <option value="Colin Didier’Serre">
+        Colin Didier’Serre
+    </option>
+
+    <!--  -->
+    <option value="Any">
+        No preference (any counsellor)
+    </option>
+
+<!--  -->
+{% for user in counsellors %}
+<option value="{{ user.id }}">
+{{ user.fname }} {{ user.lname }}
+</option>
+{% endfor %} 
+
+</select>
+
+<br/>
+
+<!--  -->
+<label>Reason</label>
+<input
+    type="text"
+    name="reason"
+    class="form-control"
+    required>
+<br/>
+
+<!--  -->
+<label>Preferred Date</label>
+<input
+    type="date"
+    name="preferred_date"
+    class="form-control"
+    required>
+<br/>
+
+<!--  -->
+<label>Preferred Time</label>
+<input
+    type="time"
+    name="preferred_time"
+    class="form-control"
+    required>
+<br/>
+
+<!--  -->
+<label>Additional Notes</label>
+<textarea
+    name="notes"
+    class="form-control"></textarea>
+<br/>
+
+<!--  -->
+<div align="center">
+    <button
+        class="btn btn-primary"
+        type="submit">
+        Submit Request
+    </button>
+</div>
+{% endblock %}

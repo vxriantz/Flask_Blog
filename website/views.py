@@ -8,7 +8,7 @@ from datetime import datetime, date, timedelta
 from . import db
 
 # import from .models user
-from .models import User, Post, Comment, Like
+from .models import User, Post, Comment, Like, Appointment
 
 # import from .forms
 from .forms import PostForm, UserPermissionUpdateForm
@@ -52,34 +52,60 @@ def permissions():
 
     users = User.query.all()
     # custom role order
-    role_order = {
-        "Guidance Counsellor": 1,
-        "Teacher": 2,
-        "Student": 3
-    }
-    
+    role_order = {"Guidance Counsellor": 1, "Teacher": 2, "Student": 3}
+
     # sort by role, then surname, then first name
-    users.sort(
-        key=lambda u: (
-            role_order.get(u.role, 99),
-            u.lname.lower(),
-            u.fname.lower()
-        )
-    )
+    users.sort(key=lambda u: (role_order.get(u.role, 99), u.lname.lower(), u.fname.lower()))
 
     # user counts for dashboard statistics
     counsellor_count = sum(1 for user in users if user.role == "Guidance Counsellor")
     teacher_count = sum(1 for user in users if user.role == "Teacher")
     student_count = sum(1 for user in users if user.role == "Student")
 
-    return render_template(
-        "permissions.html",
-        user=current_user,
-        users=users,
-        counsellor_count=counsellor_count,
-        teacher_count=teacher_count,
-        student_count=student_count
-    )
+    return render_template("permissions.html", user=current_user, users=users, counsellor_count=counsellor_count, teacher_count=teacher_count, student_count=student_count)
+
+
+
+# update user permissions route
+@views.route("/update-user/<id>", methods=['GET', 'POST'])
+# user must be logged into an admin (guidance counsellor) account to edt user permissions
+@login_required
+def update_user(id):
+    if current_user.role != "Guidance Counsellor":
+        flash("Access Denied", category='error')
+        return redirect(url_for('views.home'))
+        
+    user = User.query.filter_by(id=id).first()
+    form = UserPermissionUpdateForm()
+    if form.validate_on_submit():
+        user.role = form.role.data
+        db.session.commit()
+        flash("User permissions updated!", category="success")
+        page = request.args.get('page', 1, type=int)
+        posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
+        return redirect(url_for('views.permissions'))
+        
+    elif request.method =='GET':
+        form.role.data = user.role
+        
+    return render_template("update_permissions.html", form=form, user=current_user, posts=user)
+
+
+
+# delete user route
+@views.route("/delete-user/<id>")
+# must be logged in to access the page
+@login_required
+def delete_user(id):
+    if current_user.role != "Guidance Counsellor":
+        flash("Access Denied", category='error')
+        return redirect(url_for('views.home'))
+        
+    user = User.query.filter_by(id=id).first()
+    db.session.delete(user)
+    db.session.commit()
+    flash('User Removed!', category='success')
+    return redirect(url_for('views.permissions'))
 
 
 
@@ -151,32 +177,6 @@ def update_post(id):
 
 
 
-# update user permissions route
-@views.route("/update-user/<id>", methods=['GET', 'POST'])
-# user must be logged into an admin (guidance counsellor) account to edt user permissions
-@login_required
-def update_user(id):
-    if current_user.role != "Guidance Counsellor":
-        flash("Access Denied", category='error')
-        return redirect(url_for('views.home'))
-        
-    user = User.query.filter_by(id=id).first()
-    form = UserPermissionUpdateForm()
-    if form.validate_on_submit():
-        user.role = form.role.data
-        db.session.commit()
-        flash("User permissions updated!", category="success")
-        page = request.args.get('page', 1, type=int)
-        posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
-        return redirect(url_for('views.permissions'))
-        
-    elif request.method =='GET':
-        form.role.data = user.role
-        
-    return render_template("update_permissions.html", form=form, user=current_user, posts=user)
-
-
-
 #view user posts route
 @views.route("/posts/<username>")
 @login_required
@@ -231,23 +231,6 @@ def delete_comment(comment_id):
 
 
 
-# delete user route
-@views.route("/delete-user/<id>")
-# must be logged in to access the page
-@login_required
-def delete_user(id):
-    if current_user.role != "Guidance Counsellor":
-        flash("Access Denied", category='error')
-        return redirect(url_for('views.home'))
-        
-    user = User.query.filter_by(id=id).first()
-    db.session.delete(user)
-    db.session.commit()
-    flash('User Removed!', category='success')
-    return redirect(url_for('views.permissions'))
-
-
-
 # like comment route
 @views.route("/like-post/<post_id>", methods=['POST'])
 # user must be logged in to like post
@@ -266,6 +249,31 @@ def like(post_id):
         db.session.commit()
 
     return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
+
+
+
+# book an appointment route
+@views.route("/book-appointment", methods=["GET", "POST"])
+@login_required
+def book_appointment():
+    if request.method == "POST":
+        counsellor_id = request.form.get("counsellor")
+        if counsellor_id == "any":
+            counsellor_id = None 
+            reason = request.form.get("reason")
+            preferred_date = request.form.get("preferred_date")
+            preferred_time = request.form.get("preferred_time")
+            notes = request.form.get("notes")
+
+        appointment = Appointment(student_id=current_user.id, counsellor_id=counsellor_id, reason=reason, preferred_date=preferred_date, preferred_time=preferred_time, notes=notes) 
+        db.session.add(appointment)
+        db.session.commit()
+        flash("Appointment request submitted!", category="success")
+        return redirect(url_for("views.home"))
+
+    counsellors = User.query.all()
+    return render_template("book_appointment.html", user=current_user, counsellors=counsellors)
+
 
 
 
