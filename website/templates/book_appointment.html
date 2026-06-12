@@ -1,8 +1,12 @@
 <!-- page extends to template.html -->
-{% extends "template.html" %} {% block title %} Book Appointment {% endblock %}
+{% extends "template.html" %} {% block title %} Book an Appointment {% endblock %}
 
 <!-- book an appointment page content -->
 {% block content %}
+<br/>
+<h1>{% block header %} Book an Appointment {% endblock %}</h1>
+<br/>
+
 <label>Guidance Counsellor</label>
 <select name="counsellor_id" class="form-control" required>
 
