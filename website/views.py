@@ -270,7 +270,7 @@ def book_appointment():
 
         db.session.add(appointment)
         db.session.commit()
-        flash("Appointment request submitted!", category="success")
+        flash("Appointment Request Submitted!", category="success")
         return redirect(url_for("views.home"))
 
     counsellors = User.query.filter_by(role="Guidance Counsellor").all()

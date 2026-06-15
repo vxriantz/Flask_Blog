@@ -12,16 +12,10 @@
     <!-- guidance counellor selection dropdown -->
     <label for="counsellor_id">Guidance Counsellor</label>
 
-    <select
-        id="counsellor_id"
-        name="counsellor_id"
-        class="form-control"
-        required>
+    <select id="counsellor_id" name="counsellor_id" class="form-control" required>
 
         <!-- option for no preference (system assigns or leaves unassigned) -->
-        <option value="any">
-            No preference (Any Guidance Counsellor)
-        </option>
+        <option value="any">No preference (Any Guidance Counsellor)</option>
 
         <!-- loop through all users passed from backend -->
          <!-- only counsellors are included in dropdown list -->
@@ -35,45 +29,27 @@
 
     <!-- reason for booking appointment -->
     <label>Reason</label>
-    <input
-        type="text"
-        name="reason"
-        class="form-control"
-        required>
+    <input type="text" name="reason" class="form-control" required>
     <br/>
 
     <!-- student selected preferred appointment date -->
     <label>Preferred Date</label>
-    <input
-        type="date"
-        name="preferred_date"
-        class="form-control"
-        required>
+    <input type="date" name="preferred_date" class="form-control" required>
     <br/>
 
     <!-- student selected prefered appointment time -->
     <label>Preferred Time</label>
-    <input
-        type="time"
-        name="preferred_time"
-        class="form-control"
-        required>
+    <input type="time" name="preferred_time" class="form-control" required>
     <br/>
 
     <!-- optional additional notes from student -->
     <label>Additional Notes</label>
-    <textarea
-        name="notes"
-        class="form-control"></textarea>
+    <textarea name="notes" class="form-control"></textarea>
     <br/>
 
     <!-- submit button sends form data to backend route -->
     <div align="center">
-        <button
-            class="btn btn-primary"
-            type="submit">
-            Submit Request
-        </button>
+        <button class="btn btn-primary" type="submit">Submit Request</button>
     </div>
 </form>
 <!-- end of appointment booking form -->
