@@ -7,69 +7,75 @@
 <h1>{% block header %} Book an Appointment {% endblock %}</h1>
 <br/>
 
+<!-- start of appointment booking form -->
 <form method="POST">
-<label for="counsellor_id">Guidance Counsellor</label>
+    <!-- guidance counellor selection dropdown -->
+    <label for="counsellor_id">Guidance Counsellor</label>
 
-<select
-    id="counsellor_id"
-    name="counsellor_id"
-    class="form-control"
-    required>
+    <select
+        id="counsellor_id"
+        name="counsellor_id"
+        class="form-control"
+        required>
 
-    <option value="any">
-        No preference (Any Guidance Counsellor)
-    </option>
-
-    {% for counsellor in counsellors %}
-        <option value="{{ counsellor.id }}">
-            {{ counsellor.fname }} {{ counsellor.lname }}
+        <!-- option for no preference (system assigns or leaves unassigned) -->
+        <option value="any">
+            No preference (Any Guidance Counsellor)
         </option>
-    {% endfor %}
-</select>
-<br/>
 
-<!--  -->
-<label>Reason</label>
-<input
-    type="text"
-    name="reason"
-    class="form-control"
-    required>
-<br/>
+        <!-- loop through all users passed from backend -->
+         <!-- only counsellors are included in dropdown list -->
+        {% for counsellor in counsellors %}
+            <option value="{{ counsellor.id }}">
+                {{ counsellor.fname }} {{ counsellor.lname }}
+            </option>
+        {% endfor %}
+    </select>
+    <br/>
 
-<!--  -->
-<label>Preferred Date</label>
-<input
-    type="date"
-    name="preferred_date"
-    class="form-control"
-    required>
-<br/>
+    <!-- reason for booking appointment -->
+    <label>Reason</label>
+    <input
+        type="text"
+        name="reason"
+        class="form-control"
+        required>
+    <br/>
 
-<!--  -->
-<label>Preferred Time</label>
-<input
-    type="time"
-    name="preferred_time"
-    class="form-control"
-    required>
-<br/>
+    <!-- student selected preferred appointment date -->
+    <label>Preferred Date</label>
+    <input
+        type="date"
+        name="preferred_date"
+        class="form-control"
+        required>
+    <br/>
 
-<!--  -->
-<label>Additional Notes</label>
-<textarea
-    name="notes"
-    class="form-control"></textarea>
-<br/>
+    <!-- student selected prefered appointment time -->
+    <label>Preferred Time</label>
+    <input
+        type="time"
+        name="preferred_time"
+        class="form-control"
+        required>
+    <br/>
 
-<!--  -->
-<div align="center">
-    <button
-        class="btn btn-primary"
-        type="submit">
-        Submit Request
-    </button>
-</div>
+    <!-- optional additional notes from student -->
+    <label>Additional Notes</label>
+    <textarea
+        name="notes"
+        class="form-control"></textarea>
+    <br/>
+
+    <!-- submit button sends form data to backend route -->
+    <div align="center">
+        <button
+            class="btn btn-primary"
+            type="submit">
+            Submit Request
+        </button>
+    </div>
 </form>
+<!-- end of appointment booking form -->
 
 {% endblock %}
