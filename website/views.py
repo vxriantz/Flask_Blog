@@ -257,13 +257,15 @@ def like(post_id):
 @login_required
 def book_appointment():
     if request.method == "POST":
-        counsellor_id = request.form.get("counsellor")
+        counsellor_id = request.form.get("counsellor_id")
         if counsellor_id == "any":
-            counsellor_id = None 
-            reason = request.form.get("reason")
-            preferred_date = request.form.get("preferred_date")
-            preferred_time = request.form.get("preferred_time")
-            notes = request.form.get("notes")
+            counsellor_id = None
+        elif counsellor_id:
+            counsellor_id = int(counsellor_id)
+        reason = request.form.get("reason")
+        preferred_date = request.form.get("preferred_date")
+        preferred_time = request.form.get("preferred_time")
+        notes = request.form.get("notes")
 
         appointment = Appointment(student_id=current_user.id, counsellor_id=counsellor_id, reason=reason, preferred_date=preferred_date, preferred_time=preferred_time, notes=notes) 
         db.session.add(appointment)
@@ -271,7 +273,7 @@ def book_appointment():
         flash("Appointment request submitted!", category="success")
         return redirect(url_for("views.home"))
 
-    counsellors = User.query.all()
+    counsellors = User.query.filter_by(role="Guidance Counsellor").order_by(User.lname).all()
     return render_template("book_appointment.html", user=current_user, counsellors=counsellors)
 
 

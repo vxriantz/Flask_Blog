@@ -7,52 +7,25 @@
 <h1>{% block header %} Book an Appointment {% endblock %}</h1>
 <br/>
 
-<label>Guidance Counsellor</label>
-<select name="counsellor_id" class="form-control" required>
+<form method="POST">
+<label for="counsellor_id">Guidance Counsellor</label>
 
-<option value="any">
-No preference (any counsellor)
-</option>
+<select
+    id="counsellor_id"
+    name="counsellor_id"
+    class="form-control"
+    required>
 
-<!--  -->
-{% for user in counsellors %}
-{% if user.role == "Guidance Counsellor" %}
-<option value="{{ user.id }}">
-{{ user.fname }} {{ user.lname }}
-</option>
-{% endif %}
-{% endfor %}
-
-</select>  
-    <!--  -->
-    <option value="">
-        Select Counsellor
+    <option value="any">
+        No preference (Any Guidance Counsellor)
     </option>
 
-    <!--  -->
-    <option value="Eleanor Purchase">
-        Eleanor Purchase
-    </option>
-
-    <!--  -->
-    <option value="Colin Didier’Serre">
-        Colin Didier’Serre
-    </option>
-
-    <!--  -->
-    <option value="Any">
-        No preference (any counsellor)
-    </option>
-
-<!--  -->
-{% for user in counsellors %}
-<option value="{{ user.id }}">
-{{ user.fname }} {{ user.lname }}
-</option>
-{% endfor %} 
-
+    {% for counsellor in counsellors %}
+        <option value="{{ counsellor.id }}">
+            {{ counsellor.fname }} {{ counsellor.lname }}
+        </option>
+    {% endfor %}
 </select>
-
 <br/>
 
 <!--  -->
@@ -97,4 +70,6 @@ No preference (any counsellor)
         Submit Request
     </button>
 </div>
+</form>
+
 {% endblock %}
