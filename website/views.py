@@ -80,7 +80,7 @@ def update_user(id):
     if form.validate_on_submit():
         user.role = form.role.data
         db.session.commit()
-        flash("User permissions updated!", category="success")
+        flash("User Permissions Updated!", category="success")
         page = request.args.get('page', 1, type=int)
         posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
         return redirect(url_for('views.permissions'))
@@ -118,14 +118,14 @@ def create_post():
         title = request.form.get("title")
         content = request.form.get("content")
         if not title:
-            flash('Title cannot be empty', category='error')
+            flash('Title Cannot Be Empty', category='error')
         elif not content:
-            flash('Post cannot be empty', category='error')
+            flash('Post Cannot Be Empty', category='error')
         else:
             post = Post(title=title, content=content, author=current_user.id)
             db.session.add(post)
             db.session.commit()
-            flash('Post created!', category='success')
+            flash('Post Created!', category='success')
             return redirect(url_for('views.blog'))
 
     return render_template("create_post.html", user=current_user)
@@ -139,13 +139,13 @@ def create_post():
 def delete_post(id):
     post = Post.query.filter_by(id=id).first()
     if not post:
-        flash('Post does not exist', category='error')
+        flash('Post Does Not Exist', category='error')
     elif current_user.id != post.author:
         flash('You do not have permission to delete this post', category='error')
     else:
         db.session.delete(post)
         db.session.commit()
-        flash('Post deleted!', category='success')
+        flash('Post Deleted!', category='success')
     return redirect(url_for('views.blog'))
 
 
@@ -164,7 +164,7 @@ def update_post(id):
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()
-        flash('Post updated', category='success')
+        flash('Post Updated', category='success')
         page = request.args.get('page', 1, type=int)
         posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
         return render_template("blog.html", user=current_user, posts=posts, endpoint="views.blog")
@@ -205,7 +205,7 @@ def create_comment(post_id):
             comment = Comment(text=text, author=current_user.id, post_id=post_id)
             db.session.add(comment)
             db.session.commit()
-            flash('Comment added!', category='success')
+            flash('Comment Added!', category='success')
         else:
             flash('Post does not exist', category='error')
 
@@ -308,14 +308,14 @@ def claim_appointment(id):
     appointment = Appointment.query.get(id)
 
     if not appointment:
-        flash("Appointment not found", category="error")
+        flash("Appointment Not Found", category="error")
         return redirect(url_for("views.notifications"))
 
     # only unclaimed appointments can be claimed
     if appointment.counsellor_id is None:
         appointment.counsellor_id = current_user.id
         db.session.commit()
-        flash("Appointment claimed!", category="success")
+        flash("Appointment Claimed!", category="success")
 
     return redirect(url_for("views.notifications"))
 
@@ -333,13 +333,13 @@ def update_appointment_status(id):
     appointment = Appointment.query.get(id)
 
     if not appointment:
-        flash("Appointment not found", category="error")
+        flash("Appointment Not Found", category="error")
         return redirect(url_for("views.notifications"))
 
     appointment.status = request.form.get("status")
 
     db.session.commit()
-    flash("Status updated!", category="success")
+    flash("Status Updated!", category="success")
     return redirect(url_for("views.notifications"))
 
 
