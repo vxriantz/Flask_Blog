@@ -187,7 +187,7 @@ def posts(username):
         flash('No user with that username exists', category='error')
         return redirect(url_for('views.blog'))
     posts = Post.query.filter_by(user=user).order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
-    return render_template("posts.html", user=current_user, posts=posts, username=username, endpoint='views.posts')
+    return render_template("posts.html", user=current_user, author=user, posts=posts, username=username, endpoint='views.posts')
 
 
 
@@ -337,7 +337,6 @@ def update_appointment_status(id):
         return redirect(url_for("views.notifications"))
 
     appointment.status = request.form.get("status")
-
     db.session.commit()
     flash("Status Updated!", category="success")
     return redirect(url_for("views.notifications"))
