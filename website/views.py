@@ -266,7 +266,8 @@ def book_appointment():
         # "any counsellor" logic
         if counsellor_id == "any":
             counsellor_id = None
-        appointment = Appointment(student_id=current_user.id, counsellor_id=counsellor_id, reason=reason, preferred_date=preferred_date, preferred_time=preferred_time, notes=notes)
+        appointment = Appointment(student_id=current_user.id, counsellor_id=counsellor_id, reason=reason, 
+                                  preferred_date=preferred_date, preferred_time=preferred_time, notes=notes)
 
         db.session.add(appointment)
         db.session.commit()
