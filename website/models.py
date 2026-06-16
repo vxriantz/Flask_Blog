@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='user', passive_deletes=True)
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
     likes = db.relationship('Like', backref='user', passive_deletes=True)
+    appointments = db.relationship('Appointment', foreign_keys='Appointment.counsellor_id', backref='counsellor')
 
 
 

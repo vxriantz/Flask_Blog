@@ -1,0 +1,63 @@
+<!-- page extends to template.html -->
+{% extends "template.html"%} {% block title %} Notification Centre {% endblock %}
+
+<!-- home page content -->
+{% block content%} 
+<br/>
+<h1>{% block header %} Notification Centre {% endblock %}</h1>
+<br/>
+
+<!--  -->
+{% for appointment in appointments %}
+
+<!--  -->
+<div class="card mb-3">
+    <div class="card-body">
+        <!--  -->
+        <h5>Student Name: {{ appointment.student_id }}</h5>
+        <!--  -->
+        <p><b>Reason:</b> {{ appointment.reason }}</p>
+        <p><b>Date:</b> {{ appointment.preferred_date }}</p>
+        <p><b>Time:</b> {{ appointment.preferred_time }}</p>
+        <p><b>Notes:</b> {{ appointment.notes }}</p>
+        <!--  -->
+        <p>
+            <b>Status:</b> {{ appointment.status }}
+        </p>
+        <!--  -->
+        <p>
+            <b>Counsellor:</b>
+            {% if appointment.counsellor %}
+                {{ appointment.counsellor.fname }} {{ appointment.counsellor.lname }}
+            {% else %}
+                <em>Unassigned</em>
+            {% endif %}
+        </p>
+
+        <!-- claim appointments -->
+        {% if appointment.counsellor_id is none %}
+        <form method="POST" action="/claim-appointment/{{ appointment.id }}">
+            <button class="btn btn-primary btn-sm">Claim</button>
+        </form>
+        {% endif %}
+
+        <!-- update appointment statuses -->
+        {% if appointment.counsellor_id == current_user.id %}
+        <form method="POST" action="/update-appointment-status/{{ appointment.id }}">
+            <select name="status" class="form-control form-control-sm">
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Completed">Completed</option>
+                <option value="Declined">Declined</option>
+            </select>
+            <br/>
+            <button class="btn btn-success btn-sm">Update</button>
+        </form>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

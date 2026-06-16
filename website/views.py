@@ -254,6 +254,7 @@ def like(post_id):
 
 # book an appointment route
 @views.route("/book-appointment", methods=["GET", "POST"])
+# user must be logged in to book an appointment
 @login_required
 def book_appointment():
     if request.method == "POST":
@@ -277,6 +278,69 @@ def book_appointment():
     counsellors = User.query.filter_by(role="Guidance Counsellor").all()
     return render_template("book_appointment.html", user=current_user, counsellors=counsellors)
 
+
+
+# notification centre route
+@views.route("/notifications")
+# user must be logged in to view and change bookings
+@login_required
+def notifications():
+    if current_user.role != "Guidance Counsellor":
+        flash("Access Denied", category="error")
+        return redirect(url_for("views.home"))
+
+    appointments = Appointment.query.filter((Appointment.counsellor_id == current_user.id) | (Appointment.counsellor_id == None)
+                                            ).order_by(Appointment.date_created.desc()).all()
+
+    return render_template("notifications.html", user=current_user, appointments=appointments)
+
+
+
+# claim appointment route
+@views.route("/claim-appointment/<int:id>", methods=["POST"])
+# user must be logged in to claim appointment
+@login_required
+def claim_appointment(id):
+    if current_user.role != "Guidance Counsellor":
+        flash("Access Denied", category="error")
+        return redirect(url_for("views.home"))
+
+    appointment = Appointment.query.get(id)
+
+    if not appointment:
+        flash("Appointment not found", category="error")
+        return redirect(url_for("views.notifications"))
+
+    # only unclaimed appointments can be claimed
+    if appointment.counsellor_id is None:
+        appointment.counsellor_id = current_user.id
+        db.session.commit()
+        flash("Appointment claimed!", category="success")
+
+    return redirect(url_for("views.notifications"))
+
+
+
+# update booking status route
+@views.route("/update-appointment-status/<int:id>", methods=["POST"])
+# user must be logged in to update booking status'
+@login_required
+def update_appointment_status(id):
+    if current_user.role != "Guidance Counsellor":
+        flash("Access Denied", category="error")
+        return redirect(url_for("views.home"))
+
+    appointment = Appointment.query.get(id)
+
+    if not appointment:
+        flash("Appointment not found", category="error")
+        return redirect(url_for("views.notifications"))
+
+    appointment.status = request.form.get("status")
+
+    db.session.commit()
+    flash("Status updated!", category="success")
+    return redirect(url_for("views.notifications"))
 
 
 
