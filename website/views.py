@@ -260,15 +260,16 @@ def book_appointment():
     if request.method == "POST":
         counsellor_id = request.form.get("counsellor_id")
         reason = request.form.get("reason")
-        preferred_date = request.form.get("preferred_date")
-        preferred_time = request.form.get("preferred_time")
+        urgency = request.form.get("urgency")
+        preferred_day = request.form.get("preferred_day")
+        preferred_period = request.form.get("preferred_period")
         notes = request.form.get("notes")
 
         # "any counsellor" logic
         if counsellor_id == "any":
             counsellor_id = None
         appointment = Appointment(student_id=current_user.id, counsellor_id=counsellor_id, reason=reason, 
-                                  preferred_date=preferred_date, preferred_time=preferred_time, notes=notes)
+                                  urgency=urgency, preferred_day=preferred_day, preferred_period=preferred_period, notes=notes)
 
         db.session.add(appointment)
         db.session.commit()

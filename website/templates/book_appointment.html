@@ -32,19 +32,48 @@
     <input type="text" name="reason" class="form-control" required>
     <br/>
 
-    <!-- student selected preferred appointment date -->
-    <label>Preferred Date</label>
-    <input type="date" name="preferred_date" class="form-control" required>
+    <!-- preferred appointment timeframe -->
+    <label>Preferred Timeframe</label>
+    <select name="urgency" class="form-control" required>
+        <option value="">Select Timeframe</option>
+        <option>As Soon As Possible</option>
+        <option>This Week</option>
+        <option>Within 2 Weeks</option>
+        <option>Within the Month</option>
+    </select>
     <br/>
 
-    <!-- student selected prefered appointment time -->
-    <label>Preferred Time</label>
-    <input type="time" name="preferred_time" class="form-control" required>
+    <!-- preferred day -->
+    <label>Preferred Day</label>
+    <select name="preferred_day" class="form-control" required>
+        <option value="">Select Day</option>
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+    </select>
+    <br/>
+
+    <!-- preferred school period -->
+    <label>Preferred Period</label>
+    <select name="preferred_period" class="form-control" required>
+        <option value="">Select Period</option>
+        <option>Period 1</option>
+        <option>Period 2</option>
+        <option>Interval</option>
+        <option>Period 3</option>
+        <option>Lunch</option>
+        <option>Period 4</option>
+        <option>Period 5</option>
+    </select>
     <br/>
 
     <!-- optional additional notes from student -->
     <label>Additional Notes</label>
-    <textarea name="notes" class="form-control"></textarea>
+    <textarea name="notes" class="form-control" rows="4" placeholder="If you have a preferred day, period, or anything else that may help us schedule your appointment, please include it here."></textarea>
+    <div class="form-text">Optional: You can include preferred days, school periods, or any other information 
+        that may help your guidance counsellor arrange a suitable appointment.</div>
     <br/>
 
     <!-- submit button sends form data to backend route -->

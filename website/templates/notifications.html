@@ -14,11 +14,16 @@
 <div class="card mb-3">
     <div class="card-body">
         <!--  -->
-        <h5>Student  ID: {{ appointment.student_id }}</h5>
+        <h5>{{ appointment.student.fname }} {{ appointment.student.lname }}</h5>
+        <p>
+            <b>Email:</b>
+            {{ appointment.student.email }}
+        </p>
         <!--  -->
         <p><b>Reason:</b> {{ appointment.reason }}</p>
-        <p><b>Date:</b> {{ appointment.preferred_date }}</p>
-        <p><b>Time:</b> {{ appointment.preferred_time }}</p>
+        <p><b>Preferred Timeframe:</b> {{ appointment.urgency }}</p>
+        <p><b>Preferred Day:</b> {{ appointment.preferred_day }}</p>
+        <p><b>Preferred Period:</b> {{ appointment.preferred_period }}</p>
         <p><b>Notes:</b> {{ appointment.notes }}</p>
         <!--  -->
         <p>
@@ -46,9 +51,9 @@
         <form method="POST" action="/update-appointment-status/{{ appointment.id }}">
             <select name="status" class="form-control form-control-sm">
                 <option value="Pending">Pending</option>
-                <option value="Approved">Approved</option>
+                <option value="Approved">Accepted</option>
                 <option value="Completed">Completed</option>
-                <option value="Declined">Declined</option>
+                <option value="Declined">Cancelled</option>
             </select>
             <br/>
             <button class="btn btn-success btn-sm">Update</button>

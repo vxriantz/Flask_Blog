@@ -17,7 +17,8 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='user', passive_deletes=True)
     comments = db.relationship('Comment', backref='user', passive_deletes=True)
     likes = db.relationship('Like', backref='user', passive_deletes=True)
-    appointments = db.relationship('Appointment', foreign_keys='Appointment.counsellor_id', backref='counsellor')
+    # appointments assigned to this guidance counsellor
+    appointments = db.relationship('Appointment', foreign_keys="Appointment.counsellor_id", back_populates="counsellor")
 
 
 
@@ -58,8 +59,13 @@ class Appointment(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     counsellor_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) 
     reason = db.Column(db.String(200))
-    preferred_date = db.Column(db.String(50))
-    preferred_time = db.Column(db.String(50))
+    urgency = db.Column(db.String(50))
+    preferred_day = db.Column(db.String(20))
+    preferred_period = db.Column(db.String(20))
     notes = db.Column(db.Text)
     status = db.Column(db.String(50), default="Pending")
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    # relationship linking appointment to the student who created it
+    student = db.relationship('User', foreign_keys=[student_id])
+    # relationship linking appointment to the assigned guidance counsellor
+    counsellor = db.relationship('User', foreign_keys=[counsellor_id], back_populates="appointments")
