@@ -1,35 +1,40 @@
 <!-- page extends to template.html -->
 {% extends "template.html"%} {% block title %} Notification Centre {% endblock %}
 
-<!-- home page content -->
+<!-- notification centre page content -->
 {% block content%} 
 <br/>
 <h1>{% block header %} Notification Centre {% endblock %}</h1>
 <br/>
 
-<!--  -->
+<!-- loop through all appointments and display each one as a card -->
 {% for appointment in appointments %}
 
-<!--  -->
+<!-- appointment card container -->
 <div class="card mb-3">
     <div class="card-body">
-        <!--  -->
+        <!-- display student full name -->
         <h5>{{ appointment.student.fname }} {{ appointment.student.lname }}</h5>
+        
+        <!-- display student email for contact purposes -->
         <p>
             <b>Email:</b>
             {{ appointment.student.email }}
         </p>
-        <!--  -->
+
+        <!-- display appointment details submitted by the student -->
         <p><b>Reason:</b> {{ appointment.reason }}</p>
         <p><b>Preferred Timeframe:</b> {{ appointment.urgency }}</p>
         <p><b>Preferred Day:</b> {{ appointment.preferred_day }}</p>
         <p><b>Preferred Period:</b> {{ appointment.preferred_period }}</p>
         <p><b>Notes:</b> {{ appointment.notes }}</p>
-        <!--  -->
+        
+        <!-- display current appointment status -->
         <p>
             <b>Status:</b> {{ appointment.status }}
         </p>
-        <!--  -->
+
+        <!-- display assigned counsellor if one has been allocated -->
         <p>
             <b>Counsellor:</b>
             {% if appointment.counsellor %}
