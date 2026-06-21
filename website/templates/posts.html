@@ -1,11 +1,13 @@
 <!-- page extends to posts_div.html -->
 {% extends "posts_div.html"%} {% block title %} {{ author.fname }} {{ author.lname[0] }}.'s Posts {% endblock %}
 {% block header %} {{ author.fname }} {{ author.lname[0] }}.'s Posts {% endblock %}
+<div class="container">
 
-{% block footer %}
+    {% block footer %}
 
-<div align="center">
-<a href="/blog"><button type="button" class="btn btn-primary btn-large"> Back </button></a>
+    <div align="center">
+    <a href="/blog"><button type="button" class="btn btn-primary btn-large"> Back </button></a>
+    </div>
+
 </div>
-
 {% endblock %}

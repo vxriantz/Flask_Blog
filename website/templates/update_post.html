@@ -3,51 +3,53 @@
 
 <!-- update post page content -->
 {% block content %}
+<div class="container">
 
-<div class="content-section">
-    <form method="POST" action="">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <br/>
+                <h1>{% block header %} Update Post {% endblock %}</h1>
+                <br/>
+                <div class="form-group">
+                    {{ form.title.label(class="form-control-label") }}
+                    {% if form.title.errors %}
+                        {{ form.title(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.text.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.title(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
             <br/>
-            <h1>{% block header %} Update Post {% endblock %}</h1>
-            <br/>
-            <div class="form-group">
-                {{ form.title.label(class="form-control-label") }}
-                {% if form.title.errors %}
-                    {{ form.title(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.text.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.title(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-        </fieldset>
-        <br/>
 
-        <fieldset class="form-group">
-            <div class="form-group">
-                {{ form.content.label(class="form-control-label") }}
-                {% if form.content.errors %}
-                    {{ form.content(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.content.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.content(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-        </fieldset>
-        <br/>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-            </div>
-        <br/>
-    </form>
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.content.label(class="form-control-label") }}
+                    {% if form.content.errors %}
+                        {{ form.content(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.content.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.content(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <br/>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            <br/>
+        </form>
+    </div>
+
 </div>
-
 {% endblock content %}

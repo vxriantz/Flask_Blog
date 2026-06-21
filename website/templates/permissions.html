@@ -3,46 +3,49 @@
  
  <!-- user permissions page content -->
   {% block content %}
-  <br/>
-  <h1>{% block header %} User Permissions {% endblock %}</h1>
-  <br/>
-
-    <p>
-        <strong>Guidance Counsellors:</strong> {{ counsellor_count }}
-        &nbsp;|&nbsp;
-        <strong>Teachers:</strong> {{ teacher_count }}
-        &nbsp;|&nbsp;
-        <strong>Students:</strong> {{ student_count }}
-    </p>
+  <div class="container">
     <br/>
-  
-  <table class="table table-hover">
-        <tr>
-            <!-- headings for table -->
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Make Changes</th>
-        </tr>
-        {% for user in users %}
-        <tr>
-            <!-- content for table based on how many users are in the database -->
-            <th>{{user.fname}}</th>
-            <th>{{user.lname}}</th>
-            <th>{{user.email}}</th>
-            <th>{{user.role}}</th>
-            <!-- managing users and their roles / permissions or removing users from the website database -->
-            <th>
-                <a href="/update-user/{{user.id}}">
-                    <button  type="button" class="btn btn-primary">Edit</button>
-                </a>
-                <a href="/delete-user/{{user.id}}">
-                    <button  type="button" class="btn btn-danger">Remove</button>
-                </a>
-            </th>
-        </tr>
-        {% endfor %}
-    </table>
+    <h1>{% block header %} User Permissions {% endblock %}</h1>
+    <br/>
+
+        <p>
+            <strong>Guidance Counsellors:</strong> {{ counsellor_count }}
+            &nbsp;|&nbsp;
+            <strong>Teachers:</strong> {{ teacher_count }}
+            &nbsp;|&nbsp;
+            <strong>Students:</strong> {{ student_count }}
+        </p>
+        <br/>
+    
+    <table class="table table-hover">
+            <tr>
+                <!-- headings for table -->
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Make Changes</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <!-- content for table based on how many users are in the database -->
+                <th>{{user.fname}}</th>
+                <th>{{user.lname}}</th>
+                <th>{{user.email}}</th>
+                <th>{{user.role}}</th>
+                <!-- managing users and their roles / permissions or removing users from the website database -->
+                <th>
+                    <a href="/update-user/{{user.id}}">
+                        <button  type="button" class="btn btn-primary">Edit</button>
+                    </a>
+                    <a href="/delete-user/{{user.id}}">
+                        <button  type="button" class="btn btn-danger">Remove</button>
+                    </a>
+                </th>
+            </tr>
+            {% endfor %}
+        </table>
+
+  </div>
 
   {% endblock %}

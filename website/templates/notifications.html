@@ -3,71 +3,74 @@
 
 <!-- notification centre page content -->
 {% block content%} 
-<br/>
-<h1>{% block header %} Notification Centre {% endblock %}</h1>
-<br/>
+<div class="container">
+    <br/>
+    <h1>{% block header %} Notification Centre {% endblock %}</h1>
+    <br/>
 
-<!-- loop through all appointments and display each one as a card -->
-{% for appointment in appointments %}
+    <!-- loop through all appointments and display each one as a card -->
+    {% for appointment in appointments %}
 
-<!-- appointment card container -->
-<div class="card mb-3">
-    <div class="card-body">
-        <!-- display student full name -->
-        <h5>{{ appointment.student.fname }} {{ appointment.student.lname }}</h5>
-        
-        <!-- display student email for contact purposes -->
-        <p>
-            <b>Email:</b>
-            {{ appointment.student.email }}
-        </p>
+    <!-- appointment card container -->
+    <div class="card mb-3">
+        <div class="card-body">
+            <!-- display student full name -->
+            <h5>{{ appointment.student.fname }} {{ appointment.student.lname }}</h5>
+            
+            <!-- display student email for contact purposes -->
+            <p>
+                <b>Email:</b>
+                {{ appointment.student.email }}
+            </p>
 
-        <!-- display appointment details submitted by the student -->
-        <p><b>Reason:</b> {{ appointment.reason }}</p>
-        <p><b>Preferred Timeframe:</b> {{ appointment.urgency }}</p>
-        <p><b>Preferred Day:</b> {{ appointment.preferred_day }}</p>
-        <p><b>Preferred Period:</b> {{ appointment.preferred_period }}</p>
-        <p><b>Notes:</b> {{ appointment.notes }}</p>
-        
-        <!-- display current appointment status -->
-        <p>
-            <b>Status:</b> {{ appointment.status }}
-        </p>
+            <!-- display appointment details submitted by the student -->
+            <p><b>Reason:</b> {{ appointment.reason }}</p>
+            <p><b>Preferred Timeframe:</b> {{ appointment.urgency }}</p>
+            <p><b>Preferred Day:</b> {{ appointment.preferred_day }}</p>
+            <p><b>Preferred Period:</b> {{ appointment.preferred_period }}</p>
+            <p><b>Notes:</b> {{ appointment.notes }}</p>
+            
+            <!-- display current appointment status -->
+            <p>
+                <b>Status:</b> {{ appointment.status }}
+            </p>
 
-        <!-- display assigned counsellor if one has been allocated -->
-        <p>
-            <b>Counsellor:</b>
-            {% if appointment.counsellor %}
-                {{ appointment.counsellor.fname }} {{ appointment.counsellor.lname }}
-            {% else %}
-                <em>Unassigned</em>
+            <!-- display assigned counsellor if one has been allocated -->
+            <p>
+                <b>Counsellor:</b>
+                {% if appointment.counsellor %}
+                    {{ appointment.counsellor.fname }} {{ appointment.counsellor.lname }}
+                {% else %}
+                    <em>Unassigned</em>
+                {% endif %}
+            </p>
+
+            <!-- claim appointments -->
+            {% if appointment.counsellor_id is none %}
+            <form method="POST" action="/claim-appointment/{{ appointment.id }}">
+                <button class="btn btn-primary btn-sm">Claim</button>
+            </form>
             {% endif %}
-        </p>
 
-        <!-- claim appointments -->
-        {% if appointment.counsellor_id is none %}
-        <form method="POST" action="/claim-appointment/{{ appointment.id }}">
-            <button class="btn btn-primary btn-sm">Claim</button>
-        </form>
-        {% endif %}
+            <!-- update appointment statuses -->
+            {% if appointment.counsellor_id == current_user.id %}
+            <form method="POST" action="/update-appointment-status/{{ appointment.id }}">
+                <select name="status" class="form-control form-control-sm">
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Accepted</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Declined">Cancelled</option>
+                </select>
+                <br/>
+                <button class="btn btn-success btn-sm">Update</button>
+            </form>
+            {% endif %}
 
-        <!-- update appointment statuses -->
-        {% if appointment.counsellor_id == current_user.id %}
-        <form method="POST" action="/update-appointment-status/{{ appointment.id }}">
-            <select name="status" class="form-control form-control-sm">
-                <option value="Pending">Pending</option>
-                <option value="Approved">Accepted</option>
-                <option value="Completed">Completed</option>
-                <option value="Declined">Cancelled</option>
-            </select>
-            <br/>
-            <button class="btn btn-success btn-sm">Update</button>
-        </form>
-        {% endif %}
-
+        </div>
     </div>
-</div>
 
-{% endfor %}
+    {% endfor %}
+
+</div>
 
 {% endblock %}

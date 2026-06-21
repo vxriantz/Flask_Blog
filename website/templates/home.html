@@ -4,9 +4,32 @@
 
 <!-- home page content -->
 {% block content%} 
-<br/>
-<h1>{% block header %} Home {% endblock %}</h1>
-<br/>
+
+<!-- hero section -->
+<section class="bg-light py-5 shadow-sm">
+    <div class="container text-center">
+
+        <!-- title -->
+        <h1 class="display-4 fw-bold mb-3">School Counselling Support Portal</h1>
+
+        <!-- subtitle -->
+        <p class="lead mb-4">
+            Whether you're feeling stressed, overwhelmed, or simply need someone to talk to, 
+            we're here to help you find the support that's right for you.
+        </p>
+
+        <!-- buttons -->
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+            <!-- primary action -->
+            <a href="/book-appointment" class="btn btn-primary btn-lg">Book an Appointment</a>
+
+            <!-- emergency / contact action -->
+            <a href="/contact" class="btn btn-outline-danger btn-lg">Need Help Now</a>
+
+        </div>
+    </div>
+</section>
 
 
 {% endblock %}
