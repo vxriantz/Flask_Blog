@@ -1,11 +1,11 @@
 <!-- page extends to template.html -->
-{% extends "template.html"%} {% block title %} Posts {% endblock %}
+{% extends "template.html"%} {% block title %} Message Board {% endblock %}
 
 <!-- post page content -->
 {% block content%} 
 <div class="container">
     <br/>
-    <h1>{% block header %} Blog Posts {% endblock %}</h1> 
+    <h1>{% block header %} Message Board {% endblock %}</h1> 
     <br/>
     <div id="posts">
         {% for post in posts %}

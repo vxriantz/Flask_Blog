@@ -28,7 +28,7 @@
             <p><b>Preferred Timeframe:</b> {{ appointment.urgency }}</p>
             <p><b>Preferred Day:</b> {{ appointment.preferred_day }}</p>
             <p><b>Preferred Period:</b> {{ appointment.preferred_period }}</p>
-            <p><b>Notes:</b> {{ appointment.notes }}</p>
+            <p><b>Notes:</b> {{ appointment.notes or "N/A" }}</p>
             
             <!-- display current appointment status -->
             <p>
