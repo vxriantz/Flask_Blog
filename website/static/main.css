@@ -1,10 +1,113 @@
-nav{
-    background-color: #bdd6f7;
+:root{
+    /* soft, desaturated wellbeing palette */
+    --navy: #4A5A52;        /* soft deep green-grey */
+    --blue: #7C9A8E;        /* muted sage blue */
+    --seafoam: #C9DED2;     /* light calming green */
+    --light-blue: #EEF5F3;  /* very soft cool background */
+    --cream: #FBFBF8;       /* warm off-white */
+    --text: #2F3432;        /* softened dark grey */
+    --danger: #C97C7C;      /* calm muted red */
+
+    --radius: 18px;
+    --section-padding: 6rem;
+}
+
+.navbar{
+    background-color:var(--navy);
+}
+
+.navbar .nav-link,
+.navbar .navbar-text {
+    color: rgba(255,255,255,0.85);
+    transition: 0.2s ease;
+}
+
+.navbar .nav-link.active{
+    color: #FFFFFF;
+    font-weight: 600;
+    border-bottom: 2px solid var(--seafoam);
+    padding-bottom: 4px;
+
+}
+
+.nav-link:hover{
+    color: #D8E8E0 !important;
+}
+
+body{
+    background-color: var(--cream);
+    color: var(--text);
+    font-family: 'Outfit', Arial, sans-serif;
+}
+
+h1,h2,h3{
+    font-family: 'Nunito', Arial, sans-serif;
+    font-weight: 700;
+}
+
+p{
+    line-height:1.7;
 }
 
 .hero{
-    min-height:500px;
+    background: linear-gradient(135deg, #F3F8F6 0%, #DCEBE5 100%);
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+}
 
-    display:flex;
-    align-items:center;
+.hero h1{
+    color: var(--navy);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.hero p{
+    max-width:700px;
+    margin:auto;
+}
+
+.homepage-section{
+    padding: 7rem 0;
+}
+
+.homepage-section h2{
+    margin-bottom: 1rem;
+}
+
+.section{
+    width: 100%;
+}
+
+.section-light{
+    background-color: var(--cream);
+}
+
+.section-blue{
+    background-color: #F2F7F6; /* softer than before */
+}
+
+.section-seafoam{
+    background-color: #F0F7F4; /* very subtle tint */
+}
+
+.container {
+    max-width: 1100px;
+}
+
+.card{
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+}
+
+.btn{
+    border-radius: var(--radius);
 }

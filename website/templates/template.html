@@ -11,6 +11,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
         <script src="https://kit.fontawesome.com/999ca2bb93.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     </head>
     <body>
@@ -30,33 +31,40 @@
                   </li>
                   <!-- Always visible -->
                   <li class="nav-item">
-                      <a class="nav-link active" href="/home">Home</a>
+                      <a class="nav-link {% if request.path == '/home' %}active{% endif %}" href="/home">Home</a>
                   </li>
 
                   {% if user.is_authenticated %}
                   <li class="nav-item">
-                    <a class="nav-link" href="/blog">Message Board</a>
+                    <a class="nav-link {% if request.path == '/blog' %}active{% endif %}" href="/blog">Message Board</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="/book-appointment">Book an Appointment</a>
+                      <a class="nav-link {% if request.path == '/book-appointment' %}active{% endif %}" href="/book-appointment">Book an Appointment</a>
                   </li>
 
                   {% if current_user.role == "Guidance Counsellor" %}
                   <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" role="button"
-                          data-bs-toggle="dropdown">
-                          Admin
-                      </a>
-                      <ul class="dropdown-menu">
-                          <li><a class="dropdown-item" href="/notifications">Notification Center</a></li>
-                          <li><a class="dropdown-item" href="/permissions">Permissions</a></li>
-                      </ul>
+                    <a class="nav-link dropdown-toggle {% if request.path in ['/notifications', '/permissions'] %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item {% if request.path == '/notifications' %}active{% endif %}"
+                            href="/notifications">
+                            Notification Center
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {% if request.path == '/permissions' %}active{% endif %}"
+                            href="/permissions">
+                            Permissions
+                            </a>
+                        </li>
+                    </ul>
                   </li>
                   {% endif %}
                   {% endif %}
                   <!-- Contact always appears last on left side -->
                   <li class="nav-item">
-                      <a class="nav-link" href="/contact">Contact</a>
+                      <a class="nav-link {% if request.path == '/contact' %}active{% endif %}" href="/contact">Contact</a>
                   </li>
                 </ul>
                 
