@@ -15,7 +15,6 @@ def get_user_role(email):
     counsellors = [
         "e.purchase@sanctamaria.school.nz",
         "c.didierserre@sanctamaria.school.nz",
-        "m.mack@sanctamaria.school.nz"
     ]
     if email in counsellors:
         return "Guidance Counsellor"
