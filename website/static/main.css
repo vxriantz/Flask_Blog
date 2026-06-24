@@ -1,16 +1,16 @@
 :root{
-    /* soft, desaturated wellbeing palette */
-    --navy: #4A5A52;        /* soft deep green-grey */
-    --blue: #7C9A8E;        /* muted sage blue */
-    --seafoam: #C9DED2;     /* light calming green */
-    --light-blue: #EEF5F3;  /* very soft cool background */
-    --cream: #FBFBF8;       /* warm off-white */
-    --text: #2F3432;        /* softened dark grey */
-    --danger: #C97C7C;      /* calm muted red */
+    --navy: #2E5D9F;
+    --blue: #5D8CC7;
+    --seafoam: #e7f3fc;
+    --light-blue: #F5FAFE;
+    --cream: #FCFCFA;
+    --text: #343A40;
+    --danger: #C86B6B;
 
     --radius: 18px;
     --section-padding: 6rem;
-}
+} 
+
 
 .navbar{
     background-color:var(--navy);
@@ -50,7 +50,7 @@ p{
 }
 
 .hero{
-    background: linear-gradient(135deg, #F3F8F6 0%, #DCEBE5 100%);
+    background: #D9EAF7;
     min-height: 500px;
     display: flex;
     align-items: center;
@@ -85,11 +85,11 @@ p{
 }
 
 .section-blue{
-    background-color: #F2F7F6;
+    background-color: var(--light-blue);
 }
 
 .section-seafoam{
-    background-color: #F0F7F4;
+    background-color: var(--seafoam);
 }
 
 .container {
@@ -109,5 +109,36 @@ p{
 }
 
 .btn{
-    border-radius: var(--radius);
+    border-radius: 30px;
+    padding: .6rem 1.5rem;
+    font-weight: 600;
+    transition: .25s ease;
+}
+
+.btn-primary{
+    background: var(--navy);
+    border: none;
+}
+
+.btn-primary:hover{
+    background:#3F74B7;
+}
+
+.btn-success{
+    background:#6C98C9;
+    border:none;
+}
+
+.btn-success:hover{
+    background:#82A9D4;
+}
+
+.btn-outline-danger{
+    border:2px solid var(--danger);
+    color:var(--danger);
+}
+
+.btn-outline-danger:hover{
+    background:var(--danger);
+    color:white;
 }
