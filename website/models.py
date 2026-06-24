@@ -63,7 +63,6 @@ class Appointment(db.Model):
     preferred_day = db.Column(db.String(20))
     preferred_period = db.Column(db.String(20))
     notes = db.Column(db.Text)
-    appointment_date = db.Column(db.Date, nullable=True)
     status = db.Column(db.String(50), default="Pending")
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     # relationship linking appointment to the student who created it

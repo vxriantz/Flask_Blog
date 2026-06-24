@@ -265,6 +265,7 @@ def book_appointment():
         preferred_period = request.form.get("preferred_period")
         notes = request.form.get("notes")
 
+
         # "any counsellor" logic
         if counsellor_id == "any":
             counsellor_id = None
@@ -341,6 +342,29 @@ def update_appointment_status(id):
     db.session.commit()
     flash("Status Updated!", category="success")
     return redirect(url_for("views.notifications"))
+
+
+
+# appointment history route
+@views.route("/appointment-history")
+# user must be logged in to access page
+@login_required
+# appointment_history function
+# returns appointment_history.html
+def appointment_history():
+    # only students should access this
+    if current_user.role != "Student":
+        flash("Access Denied", category="error")
+        return redirect(url_for("views.home"))
+
+    appointments = Appointment.query.filter_by(student_id=current_user.id)\
+        .order_by(Appointment.date_created.desc()).all()
+
+    return render_template(
+        "appointment_history.html",
+        user=current_user,
+        appointments=appointments
+    )
 
 
 

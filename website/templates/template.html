@@ -42,6 +42,12 @@
                       <a class="nav-link {% if request.path == '/book-appointment' %}active{% endif %}" href="/book-appointment">Book an Appointment</a>
                   </li>
 
+                  {% if user.role == "Student" %}
+                  <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/appointment-history' %}active{% endif %}" href="/appointment-history">My Appointments</a>
+                  </li>
+                  {% endif %}
+
                   {% if current_user.role == "Guidance Counsellor" %}
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle {% if request.path in ['/notifications', '/permissions'] %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>

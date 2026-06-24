@@ -50,7 +50,7 @@
                 <div class="card-text">{{post.title}}</div>
             </div>
             <div class ="card-body">
-                <div class="card-text">{{post.content}}</div>
+                <div class="card-text">{{post.content | replace('\n', '<br>') | safe}}</div>
             </div>
             <!-- start comment code -->
             <br/>
