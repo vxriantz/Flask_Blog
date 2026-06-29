@@ -5,7 +5,7 @@
 <!-- appointment history page content -->
 {% block content %}
 
-<section class="hero">
+<section class="hero hero-small">
     <div class="container text-center">
         <h1 class="display-5 fw-bold">My Appointments</h1>
         <p class="lead">Your counselling booking history</p>
@@ -52,11 +52,13 @@
                             </td>
                             <td>
                                 {% if a.status == "Pending" %}
-                                    <span class="badge bg-warning text-dark">Pending</span>
+                                    <span class="badge bg-warning">Pending</span>
                                 {% elif a.status == "Approved" %}
                                     <span class="badge bg-primary">Approved</span>
                                 {% elif a.status == "Completed" %}
                                     <span class="badge bg-success">Completed</span>
+                                {% elif a.status == "Declined" %}
+                                    <span class="badge bg-danger">Cancelled</span>
                                 {% else %}
                                     <span class="badge bg-secondary">{{ a.status }}</span>
                                 {% endif %}

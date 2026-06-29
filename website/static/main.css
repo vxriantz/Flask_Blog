@@ -11,7 +11,7 @@
     --section-padding: 6rem;
 } 
 
-
+/* navbar css */
 .navbar{
     background-color:var(--navy);
 }
@@ -34,6 +34,7 @@
     color: #D8E8E0 !important;
 }
 
+/* content css */
 body{
     background-color: var(--cream);
     color: var(--text);
@@ -56,6 +57,14 @@ p{
     align-items: center;
 }
 
+.hero-small{
+    background: #D9EAF7;
+    min-height: 220px;
+    display: flex;
+    align-items: center;
+    padding: 3rem 0;
+}
+
 .hero h1{
     color: var(--navy);
     font-family: 'Nunito', sans-serif;
@@ -68,6 +77,7 @@ p{
     margin:auto;
 }
 
+/* homepage and section css */
 .homepage-section{
     padding: 7rem 0;
 }
@@ -96,6 +106,7 @@ p{
     max-width: 1100px;
 }
 
+/* card css */
 .card{
     border: none;
     border-radius: var(--radius);
@@ -108,37 +119,110 @@ p{
     box-shadow: 0 8px 22px rgba(0,0,0,0.08);
 }
 
+.card h4{
+    color:var(--navy);
+}
+
+.card h5{
+    color:var(--navy);
+}
+
+.badge{
+    padding: .55rem .9rem;
+    border-radius: 20px;
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.bg-warning{
+    background:#FFE6A7 !important;
+    color:#8A5A00 !important;
+}
+
+.bg-primary{
+    background:#D9EAF7 !important;
+    color:var(--navy) !important;
+}
+
+.bg-success{
+    background:#CFE7DA !important;
+    color:#2F6650 !important;
+}
+
+.bg-danger{
+    background:#F7D6D6 !important;
+    color:#A64545 !important;
+}
+
+.bg-secondary{
+    background:#ECECEC !important;
+    color:#555 !important;
+}
+
+/* button css */
 .btn{
     border-radius: 30px;
-    padding: .6rem 1.5rem;
+    padding: .65rem 1.6rem;
     font-weight: 600;
-    transition: .25s ease;
+    transition: all .25s ease;
+    box-shadow: 0 3px 10px rgba(46,93,159,.15);
+}
+
+.btn:hover{
+    transform: translateY(-2px);
 }
 
 .btn-primary{
     background: var(--navy);
     border: none;
+    color: white;
 }
 
 .btn-primary:hover{
-    background:#3F74B7;
+    background: #3C72B8;
+    color: white;
 }
 
 .btn-success{
-    background:#6C98C9;
-    border:none;
+    background: #4B7BB6;
+    border: none;
+    color: white;
 }
 
 .btn-success:hover{
-    background:#82A9D4;
+    background: var(--blue);
+    color: white;
+}
+
+.btn-primary:focus,
+.btn-primary:active,
+.btn-success:focus,
+.btn-success:active{
+    background: inherit !important;
+    color: white !important;
+    box-shadow: none !important;
 }
 
 .btn-outline-danger{
     border:2px solid var(--danger);
-    color:var(--danger);
+    color: var(--danger);
 }
 
 .btn-outline-danger:hover{
-    background:var(--danger);
+    background: var(--danger);
     color:white;
+}
+
+.table{
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.table thead{
+    background:var(--navy);
+    color:white;
+}
+
+.table tbody tr:hover{
+    background:#F7FBFD;
 }
