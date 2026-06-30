@@ -42,7 +42,9 @@
                 {% elif appointment.status == "Declined" %}
                     <span class="badge bg-danger">Cancelled</span>
                 {% else %}
-                    <span class="badge bg-secondary">{{ appointment.status }}</span>
+                    <span class="badge bg-secondary">
+                        {{ appointment.status }}
+                    </span>
                 {% endif %}
             </p>
 
