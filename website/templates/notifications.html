@@ -15,7 +15,7 @@
     <div class="card mb-3">
         <div class="card-body">
             <!-- display student full name -->
-            <h5>{{ appointment.student.fname }} {{ appointment.student.lname }}</h5>
+            <h4>{{ appointment.student.fname }} {{ appointment.student.lname }}</h4>
             
             <!-- display student email for contact purposes -->
             <p>
@@ -24,11 +24,16 @@
             </p>
 
             <!-- display appointment details submitted by the student -->
-            <p><b>Reason:</b> {{ appointment.reason }}</p>
-            <p><b>Preferred Timeframe:</b> {{ appointment.urgency }}</p>
-            <p><b>Preferred Day:</b> {{ appointment.preferred_day }}</p>
-            <p><b>Preferred Period:</b> {{ appointment.preferred_period }}</p>
-            <p><b>Notes:</b> {{ appointment.notes or "N/A" }}</p>
+            <h5 class="mt-3">Appointment Details</h5>
+                <ul class="list-unstyled">
+                <li><strong>Reason:</strong> {{ appointment.reason }}</li>
+                <li><strong>Timeframe:</strong> {{ appointment.urgency }}</li>
+                <li><strong>Preferred Day:</strong> {{ appointment.preferred_day }}</li>
+                <li><strong>Preferred Period:</strong> {{ appointment.preferred_period }}</li>
+                </ul>
+            <h6>Student Notes</h6>
+                <div class="appointment-notes">{{ appointment.notes or "No additional notes." }}</div>
+                <br/>
             
             <!-- display current appointment status -->
             <p>

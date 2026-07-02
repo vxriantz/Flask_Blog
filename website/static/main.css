@@ -227,3 +227,15 @@ p{
 .table tbody tr:hover{
     background:#F7FBFD;
 }
+
+.required{
+   color:#D9534F;
+}
+
+.appointment-notes{
+   background:#F7FBFF;
+   border-left:4px solid var(--blue);
+   padding:15px;
+   border-radius:12px;
+   white-space:pre-wrap;
+}
