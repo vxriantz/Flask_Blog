@@ -102,10 +102,21 @@ def delete_user(id):
         return redirect(url_for('views.home'))
         
     user = User.query.filter_by(id=id).first()
+    if user.role == "Guidance Counsellor":
+        counsellor_count = User.query.filter_by(role="Guidance Counsellor").count()
+    if counsellor_count == 1:
+        flash("You cannot delete the last Guidance Counsellor.", category="error")
+        return redirect(url_for("views.permissions"))
+    if not user:
+        flash("User not found.", category="error")
+        return redirect(url_for("views.permissions"))
+    # prevent counsellors from deleting themselves
+    if user.id == current_user.id:
+        flash("You cannot delete your own account.", category="error")
+        return redirect(url_for("views.permissions"))
     db.session.delete(user)
     db.session.commit()
-    flash('User Removed!', category='success')
-    return redirect(url_for('views.permissions'))
+    flash("User Removed!", category="success")
 
 
 
@@ -140,7 +151,7 @@ def delete_post(id):
     post = Post.query.filter_by(id=id).first()
     if not post:
         flash('Post Does Not Exist', category='error')
-    elif current_user.id != post.author:
+    elif (current_user.id != post.author and current_user.role not in ["Teacher", "Guidance Counsellor"]):
         flash('You do not have permission to delete this post', category='error')
     else:
         db.session.delete(post)
@@ -221,7 +232,7 @@ def delete_comment(comment_id):
     comment = Comment.query.filter_by(id=comment_id).first()
     if not comment:
         flash('Comment does not exist', category='error')
-    elif current_user.id != comment.author and current_user.id != comment.post.author:
+    elif (current_user.id != comment.author and current_user.id != comment.post.author and current_user.role not in ["Teacher", "Guidance Counsellor"]):
         flash('You do not have permission to delete this comment', category='error')
     else:
         db.session.delete(comment)

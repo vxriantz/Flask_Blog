@@ -14,9 +14,9 @@ class User(db.Model, UserMixin):
     role = db.Column(db.String(150))
     password = db.Column(db.String(150))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
-    posts = db.relationship('Post', backref='user', passive_deletes=True)
-    comments = db.relationship('Comment', backref='user', passive_deletes=True)
-    likes = db.relationship('Like', backref='user', passive_deletes=True)
+    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
+    comments = db.relationship("Comment", backref="user", cascade="all, delete-orphan")
+    likes = db.relationship("Like", backref="user", cascade="all, delete-orphan")
     # appointments assigned to this guidance counsellor
     appointments = db.relationship('Appointment', foreign_keys="Appointment.counsellor_id", back_populates="counsellor")
 
@@ -29,8 +29,8 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
-    comments = db.relationship('Comment', backref='post', passive_deletes=True)
-    likes = db.relationship('Like', backref='post', passive_deletes=True)
+    comments = db.relationship('Comment', backref='post', cascade="all, delete-orphan")
+    likes = db.relationship('Like', backref='post', cascade="all, delete-orphan")
 
 
 

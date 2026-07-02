@@ -3,7 +3,7 @@
 
 <!-- post page content -->
 {% block content%} 
-<section class="hero hero-small">
+<section class="hero hero-small mb-5">
     <div class="container text-center">
         <h1 class="display-5 fw-bold">Message Board</h1>
         <p class="lead"><strong>Share kindly.</strong> Encourage others and keep discussions respectful.<br>
@@ -32,7 +32,7 @@
                         <!-- end of likes section-->
 
                         <!-- start of the delete dropdown menu -->
-                        {% if user.id == post.author %}
+                        {% if user.id == post.author or user.role == "Teacher" or user.role == "Guidance Counsellor" %}
                         <div class="btn-group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown"></button>
                             <ul class="dropdown-menu">
@@ -40,9 +40,11 @@
                                     <a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a>
                                 </li>
                                 <!-- start of update post -->
+                                {% if user.id == post.author %}
                                 <li>
                                     <a href="/update-post/{{post.id}}" class="dropdown-item">Update</a>
                                 </li>
+                                {% endif %}
                                 <!-- end of update post -->
                             </ul>
                         </div>
@@ -81,7 +83,7 @@
                             </div>
                             <div>
                                 <small class="text-muted">{{comment.date_created}}</small>
-                                {% if user.id == comment.author or user.id == post.author %}
+                                {% if user.id == comment.author or user.id == post.author or user.role == "Teacher" or user.role == "Guidance Counsellor" %}
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-small btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
                                     <ul class="dropdown-menu">
