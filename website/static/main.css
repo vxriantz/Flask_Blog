@@ -78,6 +78,11 @@ p{
     margin:auto;
 }
 
+.hero .lead{
+    max-width:900px;
+    margin:0 auto;
+}
+
 /* homepage and section css */
 .homepage-section{
     padding: 7rem 0;
@@ -238,4 +243,15 @@ p{
    padding:15px;
    border-radius:12px;
    white-space:pre-wrap;
+}
+
+form{
+    padding-bottom:1rem;
+}
+
+.form-control,
+.form-select{
+    border-radius:14px;
+    border:1px solid #D5E5F3;
+    padding:.7rem 1rem;
 }

@@ -13,10 +13,12 @@
 
     <!-- appointment card container -->
     <div class="card mb-3">
-        <div class="card-body">
+        <div class="card">
             <!-- display student full name -->
-            <h4>{{ appointment.student.fname }} {{ appointment.student.lname }}</h4>
-            
+            <div class="card-header">
+                <h4>{{ appointment.student.fname }} {{ appointment.student.lname }}</h4>
+            </div>
+
             <!-- display student email for contact purposes -->
             <p>
                 <b>Email:</b>

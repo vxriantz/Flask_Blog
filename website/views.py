@@ -144,7 +144,7 @@ def create_post():
 
 
 # delete blog post route
-@views.route("/delete-post/<id>")
+@views.route("/delete-post/{{ post.id }}?page={{ posts.page }}")
 # user must be logged in to delete post
 @login_required
 def delete_post(id):
@@ -157,12 +157,13 @@ def delete_post(id):
         db.session.delete(post)
         db.session.commit()
         flash('Post Deleted!', category='success')
-    return redirect(url_for('views.blog'))
+    page = request.args.get("page", 1, type=int)
+    return redirect(url_for("views.blog", page=page))
 
 
 
 # update blog post route
-@views.route("/update-post/<id>", methods=['GET', 'POST'])
+@views.route("/update-post/{{post.id}}?page={{posts.page}}", methods=['GET', 'POST'])
 # user must be logged in to update post
 @login_required
 def update_post(id):
@@ -176,9 +177,8 @@ def update_post(id):
         post.content = form.content.data
         db.session.commit()
         flash('Post Updated', category='success')
-        page = request.args.get('page', 1, type=int)
-        posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
-        return render_template("blog.html", user=current_user, posts=posts, endpoint="views.blog")
+        page = request.args.get("page", 1, type=int)
+        return redirect(url_for("views.blog", page=page))
     
     elif request.method == 'GET':
         form.title.data = post.title
@@ -225,7 +225,7 @@ def create_comment(post_id):
 
 
 # delete comment route
-@views.route("/delete-comment/<comment_id>")
+@views.route("/delete-comment/{{ comment.id }}?page={{ posts.page }}")
 # user must be logged in to delete comment
 @login_required
 def delete_comment(comment_id):
@@ -238,7 +238,8 @@ def delete_comment(comment_id):
         db.session.delete(comment)
         db.session.commit()
         flash('Comment deleted!', category='success')
-    return redirect(url_for('views.blog'))
+    page = request.args.get("page", 1, type=int)
+    return redirect(url_for("views.blog", page=page))
 
 
 
@@ -285,8 +286,8 @@ def book_appointment():
 
         db.session.add(appointment)
         db.session.commit()
-        flash("Appointment Request Submitted!", category="success")
-        return redirect(url_for("views.home"))
+        flash("Appointment request submitted successfully!", category="success")
+        return redirect(url_for("views.appointment_history"))
 
     counsellors = User.query.filter_by(role="Guidance Counsellor").all()
     return render_template("book_appointment.html", user=current_user, counsellors=counsellors)
