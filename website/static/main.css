@@ -255,3 +255,17 @@ form{
     border:1px solid #D5E5F3;
     padding:.7rem 1rem;
 }
+
+.messageboard-img {
+    width: 600px;
+    height: auto;
+}
+
+.counselling-img {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    padding-right: 1.5rem;
+}

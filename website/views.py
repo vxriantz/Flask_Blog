@@ -144,7 +144,7 @@ def create_post():
 
 
 # delete blog post route
-@views.route("/delete-post/{{ post.id }}?page={{ posts.page }}")
+@views.route("/delete-post/<int:id>")
 # user must be logged in to delete post
 @login_required
 def delete_post(id):
@@ -163,7 +163,7 @@ def delete_post(id):
 
 
 # update blog post route
-@views.route("/update-post/{{post.id}}?page={{posts.page}}", methods=['GET', 'POST'])
+@views.route("/update-post/<int:id>", methods=["GET", "POST"])
 # user must be logged in to update post
 @login_required
 def update_post(id):
@@ -211,7 +211,7 @@ def create_comment(post_id):
     if not text:
         flash('Comment cannot be empty', category='error')
     else:
-        post = Post.query.filter_by(id=post_id)
+        post = Post.query.filter_by(id=post_id).first()
         if post:
             comment = Comment(text=text, author=current_user.id, post_id=post_id)
             db.session.add(comment)
@@ -225,7 +225,7 @@ def create_comment(post_id):
 
 
 # delete comment route
-@views.route("/delete-comment/{{ comment.id }}?page={{ posts.page }}")
+@views.route("/delete-comment/<int:comment_id>")
 # user must be logged in to delete comment
 @login_required
 def delete_comment(comment_id):
