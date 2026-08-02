@@ -357,6 +357,28 @@ def update_appointment_status(id):
 
 
 
+# delete appointment route
+@views.route("/delete-appointment/<int:id>", methods=["POST"])
+@login_required
+def delete_appointment(id):
+    if current_user.role != "Guidance Counsellor":
+        flash("Access Denied", category="error")
+        return redirect(url_for("views.home"))
+
+    appointment = Appointment.query.get(id)
+
+    if not appointment:
+        flash("Appointment Not Found", category="error")
+        return redirect(url_for("views.notifications"))
+
+    db.session.delete(appointment)
+    db.session.commit()
+
+    flash("Appointment Deleted!", category="success")
+    return redirect(url_for("views.notifications"))
+
+
+
 # appointment history route
 @views.route("/appointment-history")
 # user must be logged in to access page

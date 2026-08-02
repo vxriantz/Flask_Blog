@@ -12,81 +12,107 @@
     {% for appointment in appointments %}
 
     <!-- appointment card container -->
-    <div class="card mb-3">
-        <div class="card">
-            <!-- display student full name -->
-            <div class="card-header">
-                <h4>{{ appointment.student.fname }} {{ appointment.student.lname }}</h4>
-            </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="mb-0">
+        {{ appointment.student.fname }} {{ appointment.student.lname }}
+    </h4>
+
+    <!-- dropdown for delete appointment button -->
+    <div class="dropdown">
+        <button
+            class="btn btn-sm btn-light border-0"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            ⋮
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+                <form method="POST"
+                      action="/delete-appointment/{{ appointment.id }}"
+                      onsubmit="return confirm('Delete this appointment?');">
+                    <button class="dropdown-item text-danger" type="submit">
+                        Delete Appointment
+                    </button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
 
             <!-- display student email for contact purposes -->
-            <p>
-                <b>Email:</b>
-                {{ appointment.student.email }}
-            </p>
+            <div class="card-body">
+                <div class="mb-4">
+                    <strong>Email:</strong>
+                    {{ appointment.student.email }}
+                </div>
 
-            <!-- display appointment details submitted by the student -->
-            <h5 class="mt-3">Appointment Details</h5>
-                <ul class="list-unstyled">
-                <li><strong>Reason:</strong> {{ appointment.reason }}</li>
-                <li><strong>Timeframe:</strong> {{ appointment.urgency }}</li>
-                <li><strong>Preferred Day:</strong> {{ appointment.preferred_day }}</li>
-                <li><strong>Preferred Period:</strong> {{ appointment.preferred_period }}</li>
-                </ul>
-            <h6>Student Notes</h6>
-                <div class="appointment-notes">{{ appointment.notes or "No additional notes." }}</div>
-                <br/>
-            
-            <!-- display current appointment status -->
-            <p>
-                <strong>Status:</strong>
-                {% if appointment.status == "Pending" %}
-                    <span class="badge bg-warning">Pending</span>
-                {% elif appointment.status == "Approved" %}
-                    <span class="badge bg-primary">Approved</span>
-                {% elif appointment.status == "Completed" %}
-                    <span class="badge bg-success">Completed</span>
-                {% elif appointment.status == "Declined" %}
-                    <span class="badge bg-danger">Cancelled</span>
-                {% else %}
-                    <span class="badge bg-secondary">
-                        {{ appointment.status }}
-                    </span>
+                <!-- display appointment details submitted by the student -->
+                <h5 class="mt-4">Appointment Details</h5>
+                    <div class="appointment-details card p-3 mb-4">
+                        <p><strong>Reason:</strong> {{ appointment.reason }}</p>
+                        <p><strong>Timeframe:</strong> {{ appointment.urgency }}</p>
+                        <p><strong>Preferred Day:</strong> {{ appointment.preferred_day }}</p>
+                        <p class="mb-0"><strong>Preferred Period:</strong> {{ appointment.preferred_period }}</p>
+                    </div>
+                <h5 class="mt-5 mb-3">Student Notes</h5>
+                <div class="appointment-notes">
+                    {{ appointment.notes or "No additional notes." }}
+                </div>
+                
+                <!-- display current appointment status -->
+                <div class="row mt-4 mb-4">
+                    <div class="col-md-6">
+                        <strong>Status</strong><br>
+
+                        {% if appointment.status == "Pending" %}
+                            <span class="badge bg-warning">Pending</span>
+                        {% elif appointment.status == "Approved" %}
+                            <span class="badge bg-primary">Approved</span>
+                        {% elif appointment.status == "Completed" %}
+                            <span class="badge bg-success">Completed</span>
+                        {% elif appointment.status == "Declined" %}
+                            <span class="badge bg-danger">Cancelled</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- display assigned counsellor if one has been allocated -->
+                    <div class="col-md-6">
+                        <strong>Counsellor</strong><br>
+
+                        {% if appointment.counsellor %}
+                            {{ appointment.counsellor.fname }}
+                            {{ appointment.counsellor.lname }}
+                        {% else %}
+                            <em>Unassigned</em>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- claim appointments -->
+                {% if appointment.counsellor_id is none %}
+                <form method="POST" action="/claim-appointment/{{ appointment.id }}">
+                    <button class="btn btn-primary w-100">Claim</button>
+                </form>
                 {% endif %}
-            </p>
 
-            <!-- display assigned counsellor if one has been allocated -->
-            <p>
-                <b>Counsellor:</b>
-                {% if appointment.counsellor %}
-                    {{ appointment.counsellor.fname }} {{ appointment.counsellor.lname }}
-                {% else %}
-                    <em>Unassigned</em>
+                <!-- update appointment statuses -->
+                {% if appointment.counsellor_id == current_user.id %}
+                <form method="POST" action="/update-appointment-status/{{ appointment.id }}">
+                    <select name="status" class="form-control form-control-sm">
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Accepted</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Declined">Cancelled</option>
+                    </select>
+                    <br/>
+                    <button class="btn btn-success w-100 mt-2">Update</button>
+                </form>
                 {% endif %}
-            </p>
+            </div>
 
-            <!-- claim appointments -->
-            {% if appointment.counsellor_id is none %}
-            <form method="POST" action="/claim-appointment/{{ appointment.id }}">
-                <button class="btn btn-primary btn-sm">Claim</button>
-            </form>
-            {% endif %}
-
-            <!-- update appointment statuses -->
-            {% if appointment.counsellor_id == current_user.id %}
-            <form method="POST" action="/update-appointment-status/{{ appointment.id }}">
-                <select name="status" class="form-control form-control-sm">
-                    <option value="Pending">Pending</option>
-                    <option value="Approved">Accepted</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Declined">Cancelled</option>
-                </select>
-                <br/>
-                <button class="btn btn-success btn-sm">Update</button>
-            </form>
-            {% endif %}
-
-        </div>
     </div>
 
     {% endfor %}
