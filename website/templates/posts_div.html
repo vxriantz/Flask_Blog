@@ -3,14 +3,20 @@
 
 <!-- post page content -->
 {% block content%} 
+{% block hero %}
 <section class="hero hero-small mb-5">
     <div class="container text-center">
         <h1 class="display-5 fw-bold">Message Board</h1>
-        <p class="lead">A space for students to share encouragement, ask questions, and support one another respectfully. <br>
-            Posts are moderated by school staff.</p>
-        <p class="small text-muted"><strong>If you need urgent support, please contact a guidance counsellor directly or visit the Contact page.</strong></p>
+        <p class="lead">
+            A space for students to share encouragement, ask questions, and support one another respectfully.<br>
+            Posts are moderated by school staff.
+        </p>
+        <p class="small text-muted">
+            <strong>If you need urgent support, please contact a guidance counsellor directly or visit the Contact page.</strong>
+        </p>
     </div>
 </section>
+{% endblock %}
 
 
 <div class="container">
@@ -37,12 +43,12 @@
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown"></button>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a>
+                                    <a href="{{ url_for('views.delete_post', id=post.id, page=posts.page) }}" class="dropdown-item">Delete</a>
                                 </li>
                                 <!-- start of update post -->
                                 {% if user.id == post.author %}
                                 <li>
-                                    <a href="/update-post/{{post.id}}" class="dropdown-item">Update</a>
+                                    <a href="{{ url_for('views.update_post', id=post.id, page=posts.page) }}" class="dropdown-item">Update</a>
                                 </li>
                                 {% endif %}
                                 <!-- end of update post -->
@@ -88,7 +94,7 @@
                                     <button type="button" class="btn btn-small btn-primary dropdown-toggle" data-bs-toggle="dropdown"></button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="/delete-comment/{{comment.id}}"class="dropdown-item">Delete</a>
+                                            <a href="{{ url_for('views.delete_comment', comment_id=comment.id, page=posts.page) }}" class="dropdown-item">Delete</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -100,7 +106,7 @@
                 </div>
             </div>
             <!-- comment input form -->
-            <form class="input-group mb-3" method="POST" action="/create-comment/{{post.id}}">
+            <form class="input-group mb-3" method="POST" action="{{ url_for('views.create_comment', post_id=post.id, page=posts.page) }}">
                 <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!"/>
                 <button type="submit" class="btn btn-primary">Comment</button>
             </form >

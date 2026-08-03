@@ -6,7 +6,7 @@
 <div class="container">
 
     <div class="content-section">
-        <form method="POST" action="">
+        <form method="POST" action="{{ url_for('views.update_post', id=post.id, page=page) }}">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <br/>

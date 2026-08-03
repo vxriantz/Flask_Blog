@@ -32,9 +32,7 @@
 
         <ul class="dropdown-menu dropdown-menu-end">
             <li>
-                <form method="POST"
-                      action="/delete-appointment/{{ appointment.id }}"
-                      onsubmit="return confirm('Delete this appointment?');">
+                <form method="POST" action="{{ url_for('views.delete_appointment', id=appointment.id, page=appointments.page) }}" onsubmit="return confirm('Delete this appointment?');">
                     <button class="dropdown-item text-danger" type="submit">
                         Delete Appointment
                     </button>
@@ -95,14 +93,14 @@
 
                 <!-- claim appointments -->
                 {% if appointment.counsellor_id is none %}
-                <form method="POST" action="/claim-appointment/{{ appointment.id }}">
+                <form method="POST" action="{{ url_for('views.claim_appointment', id=appointment.id, page=appointments.page) }}">
                     <button class="btn btn-primary w-100">Claim</button>
                 </form>
                 {% endif %}
 
                 <!-- update appointment statuses -->
                 {% if appointment.counsellor_id == current_user.id %}
-                <form method="POST" action="/update-appointment-status/{{ appointment.id }}">
+                <form method="POST" action="{{ url_for('views.update_appointment_status', id=appointment.id, page=appointments.page) }}">
                     <select name="status" class="form-control form-control-sm">
                         <option value="Pending">Pending</option>
                         <option value="Approved">Accepted</option>

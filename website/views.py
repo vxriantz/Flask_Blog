@@ -117,6 +117,7 @@ def delete_user(id):
     db.session.delete(user)
     db.session.commit()
     flash("User Removed!", category="success")
+    return redirect(url_for("views.permissions"))
 
 
 
@@ -184,7 +185,9 @@ def update_post(id):
         form.title.data = post.title
         form.content.data = post.content
 
-    return render_template("update_post.html", form=form, user=current_user)
+    page = request.args.get("page", 1, type=int)
+
+    return render_template("update_post.html", form=form, user=current_user, post=post, page=page)
 
 
 
@@ -220,7 +223,8 @@ def create_comment(post_id):
         else:
             flash('Post does not exist', category='error')
 
-    return redirect(url_for('views.blog'))
+    page = request.args.get("page", 1, type=int)
+    return redirect(url_for("views.blog", page=page))
 
 
 
@@ -306,7 +310,7 @@ def notifications():
     page = request.args.get("page", 1, type=int)
     appointments = (Appointment.query.order_by(Appointment.date_created.desc()).paginate(page=page, per_page=10))
 
-    return render_template("notifications.html", user=current_user, appointments=appointments)
+    return render_template("notifications.html", user=current_user, appointments=appointments, endpoint="views.notifications")
 
 
 
@@ -331,7 +335,8 @@ def claim_appointment(id):
         db.session.commit()
         flash("Appointment Claimed!", category="success")
 
-    return redirect(url_for("views.notifications"))
+    page = request.args.get("page", 1, type=int)
+    return redirect(url_for("views.notifications", page=page))
 
 
 
@@ -353,7 +358,8 @@ def update_appointment_status(id):
     appointment.status = request.form.get("status")
     db.session.commit()
     flash("Status Updated!", category="success")
-    return redirect(url_for("views.notifications"))
+    page = request.args.get("page", 1, type=int)
+    return redirect(url_for("views.notifications", page=page))
 
 
 
@@ -375,7 +381,8 @@ def delete_appointment(id):
     db.session.commit()
 
     flash("Appointment Deleted!", category="success")
-    return redirect(url_for("views.notifications"))
+    page = request.args.get("page", 1, type=int)
+    return redirect(url_for("views.notifications", page=page))
 
 
 

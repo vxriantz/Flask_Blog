@@ -1,13 +1,27 @@
 <!-- page extends to posts_div.html -->
-{% extends "posts_div.html"%} {% block title %} {{ author.fname }} {{ author.lname[0] }}.'s Posts {% endblock %}
-{% block header %} {{ author.fname }} {{ author.lname[0] }}.'s Posts {% endblock %}
-<div class="container">
+{% extends "posts_div.html" %}{% block title %}{{ author.fname }} {{ author.lname[0] }}.'s Posts{% endblock %}
 
-    {% block footer %}
-
-    <div align="center">
-    <a href="/blog"><button type="button" class="btn btn-primary btn-large"> Back </button></a>
+{% block hero %}
+<section class="hero hero-small mb-5">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold">
+            {{ author.fname }} {{ author.lname[0] }}.'s Posts
+        </h1>
+        <p class="lead">
+            Browse every post made by {{ author.fname }}
+        </p>
     </div>
+</section>
+{% endblock %}
 
+{% block header %}{{ author.fname }} {{ author.lname[0] }}.'s Posts{% endblock %}
+
+{% block footer %}
+<div align="center">
+    <a href="/blog">
+        <button type="button" class="btn btn-primary btn-large">
+            Back
+        </button>
+    </a>
 </div>
 {% endblock %}
