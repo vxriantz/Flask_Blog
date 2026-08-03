@@ -8,8 +8,10 @@
     <h1>{% block header %} Notification Centre {% endblock %}</h1>
     <br/>
 
+    <p class="text-muted">Showing appointments {{ appointments.first }} - {{ appointments.last }} of {{ appointments.total }}</p>
+
     <!-- loop through all appointments and display each one as a card -->
-    {% for appointment in appointments %}
+    {% for appointment in appointments.items %}
 
     <!-- appointment card container -->
     <div class="card mb-4">
@@ -112,11 +114,20 @@
                 </form>
                 {% endif %}
             </div>
-
     </div>
-
     {% endfor %}
-
+    <div class="text-center mt-4">
+    {% for page_num in appointments.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+            {% if appointments.page == page_num %}
+                <a class="btn btn-primary mb-4"href="{{ url_for('views.notifications', page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-primary mb-4"href="{{ url_for('views.notifications', page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+        {% endif %}
+    {% endfor %}
+</div>
 </div>
 
 {% endblock %}

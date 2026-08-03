@@ -303,8 +303,8 @@ def notifications():
         flash("Access Denied", category="error")
         return redirect(url_for("views.home"))
 
-    appointments = Appointment.query.filter((Appointment.counsellor_id == current_user.id) | (Appointment.counsellor_id == None)
-                                            ).order_by(Appointment.date_created.desc()).all()
+    page = request.args.get("page", 1, type=int)
+    appointments = (Appointment.query.order_by(Appointment.date_created.desc()).paginate(page=page, per_page=10))
 
     return render_template("notifications.html", user=current_user, appointments=appointments)
 
