@@ -68,7 +68,7 @@ def permissions():
 
 # update user permissions route
 @views.route("/update-user/<id>", methods=['GET', 'POST'])
-# user must be logged into an admin (guidance counsellor) account to edt user permissions
+# user must be logged into an admin (guidance counsellor or teacher) account to edt user permissions
 @login_required
 def update_user(id):
     if current_user.role not in ["Teacher", "Guidance Counsellor"]:
@@ -81,14 +81,12 @@ def update_user(id):
         user.role = form.role.data
         db.session.commit()
         flash("User Permissions Updated!", category="success")
-        page = request.args.get('page', 1, type=int)
-        posts = Post.query.order_by(Post.date_created.desc()).paginate(page=page, per_page=4)
         return redirect(url_for('views.permissions'))
         
     elif request.method =='GET':
         form.role.data = user.role
         
-    return render_template("update_permissions.html", form=form, user=current_user, posts=user)
+    return render_template("update_permissions.html", form=form, user=current_user, selected_user=user)
 
 
 

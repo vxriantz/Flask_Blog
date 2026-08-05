@@ -8,6 +8,30 @@
     <div class="content-section">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <p><strong>Name:</strong>
+                        {{ selected_user.fname }}
+                        {{ selected_user.lname }}
+                    </p>
+                    <p><strong>Username:</strong>
+                        {{ selected_user.username }}
+                    </p>
+                    <p><strong>Email:</strong>
+                        {{ selected_user.email }}
+                    </p>
+                    <p class="mb-0">
+                        <strong>Current Role:</strong>
+                        {% if selected_user.role == "Student" %}
+                            <span class="badge bg-success">Student</span>
+                        {% elif selected_user.role == "Teacher" %}
+                            <span class="badge bg-warning">Teacher</span>
+                        {% else %}
+                            <span class="badge bg-primary">Guidance Counsellor</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
             <!-- permission role form field -->
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Update User Permissions</legend>
