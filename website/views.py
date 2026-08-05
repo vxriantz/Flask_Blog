@@ -46,7 +46,7 @@ def blog():
 # permissions route function
 # returns permissions.html
 def permissions():
-    if current_user.role != "Guidance Counsellor":
+    if current_user.role not in ["Teacher", "Guidance Counsellor"]:
         flash("Access Denied", category='error')
         return redirect(url_for('views.home'))
 
@@ -71,7 +71,7 @@ def permissions():
 # user must be logged into an admin (guidance counsellor) account to edt user permissions
 @login_required
 def update_user(id):
-    if current_user.role != "Guidance Counsellor":
+    if current_user.role not in ["Teacher", "Guidance Counsellor"]:
         flash("Access Denied", category='error')
         return redirect(url_for('views.home'))
         

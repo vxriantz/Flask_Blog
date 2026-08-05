@@ -99,10 +99,6 @@ p {
     margin-bottom: 1rem;
 }
 
-.section {
-    width: 100%;
-}
-
 .section-light {
     background-color: var(--cream);
 }
@@ -132,41 +128,33 @@ p {
     box-shadow: 0 8px 22px rgba(0,0,0,0.08);
 }
 
-.card h4 {
-    color:var(--navy);
-}
-
-.card h5 {
+.card h4, .card h5 {
     color:var(--navy);
 }
 
 .card ul {
-    list-style:none;
-    padding-left:0;
-    margin-bottom:0;
+    padding-left: 1.25rem;
+    margin-bottom: 0;
+}
+
+.card ul.resources-list {
+    list-style: disc;
 }
 
 .card li {
-    margin-bottom:.7rem;
+    margin-bottom:1rem;
     line-height:1.5;
 }
 
-.decorative-list li::before {
-    content:"✧";
-    color:var(--blue);
-    font-weight:bold;
-    margin-right:.7rem;
-}
-
 .card a:not(.btn) {
-    color:var(--navy);
-    text-decoration:none;
-    transition:.2s ease;
+    color: var(--navy);
+    font-weight: 400;
 }
 
 .card a:not(.btn):hover {
-    color:var(--blue);
-    text-decoration:underline;
+    color: var(--blue);
+    text-decoration: underline;
+    padding-left: 4px;
 }
 
 .badge {
@@ -255,20 +243,6 @@ p {
     color:white;
 }
 
-.table {
-    border-radius:18px;
-    overflow:hidden;
-}
-
-.table thead {
-    background:var(--navy);
-    color:white;
-}
-
-.table tbody tr:hover {
-    background:#F7FBFD;
-}
-
 .required {
    color:#D9534F;
 }
@@ -317,4 +291,13 @@ form {
     display: block;
     margin: 0 auto;
     padding-right: 1.5rem;
+}
+
+.resource-description {
+    color: #555;
+    font-size: 0.9rem;
+    font-style: italic;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
 }

@@ -16,7 +16,7 @@
     </head>
     <body>
         <!-- navbar -->
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg sticky-top">
             <div class="container-fluid">
               <a class="navbar-brand" href="/home"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,7 @@
                       <a class="nav-link {% if request.path == '/home' %}active{% endif %}" href="/home">Home</a>
                   </li>
 
+                  <!-- only visible if signed in -->
                   {% if user.is_authenticated %}
                   <li class="nav-item">
                     <a class="nav-link {% if request.path == '/blog' %}active{% endif %}" href="/blog">Message Board</a>
@@ -42,33 +43,47 @@
                       <a class="nav-link {% if request.path == '/book-appointment' %}active{% endif %}" href="/book-appointment">Book an Appointment</a>
                   </li>
 
+                  <!-- only visible to students -->
                   {% if user.role == "Student" %}
                   <li class="nav-item">
                     <a class="nav-link {% if request.path == '/appointment-history' %}active{% endif %}" href="/appointment-history">My Appointments</a>
                   </li>
                   {% endif %}
 
-                  {% if current_user.role == "Guidance Counsellor" %}
+                  <!-- only visible to teachers and guidance counsellors -->
+                  {% if current_user.role in ["Guidance Counsellor", "Teacher"] %}
                   <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {% if request.path in ['/notifications', '/permissions'] %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item {% if request.path == '/notifications' %}active{% endif %}"
-                            href="/notifications">
-                            Notification Centre
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item {% if request.path == '/permissions' %}active{% endif %}"
-                            href="/permissions">
-                            Permissions
-                            </a>
-                        </li>
-                    </ul>
+                      <a class="nav-link dropdown-toggle {% if request.path in ['/notifications', '/permissions'] %}active{% endif %}"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                            Admin
+                      </a>
+                      <ul class="dropdown-menu">
+
+                          <!-- guidance counsellors only -->
+                          {% if current_user.role == "Guidance Counsellor" %}
+                          <li>
+                              <a class="dropdown-item {% if request.path == '/notifications' %}active{% endif %}"
+                              href="/notifications">
+                                  Notification Centre
+                              </a>
+                          </li>
+                          {% endif %}
+
+                        <!-- teachers and guidance counsellors -->
+                          <li>
+                              <a class="dropdown-item {% if request.path == '/permissions' %}active{% endif %}"
+                              href="/permissions">
+                                  Permissions
+                              </a>
+                          </li>
+                      </ul>
                   </li>
                   {% endif %}
                   {% endif %}
-                  <!-- Contact always appears last on left side -->
+                  <!-- contact always appears last on left side -->
                   <li class="nav-item">
                       <a class="nav-link {% if request.path == '/contact' %}active{% endif %}" href="/contact">Contact</a>
                   </li>
