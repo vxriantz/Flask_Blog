@@ -3,7 +3,7 @@
  
  <!-- user permissions page content -->
   {% block content %}
-  <div class="container">
+  <div class="container page-content">
     <br/>
     <h1>{% block header %} User Permissions {% endblock %}</h1>
     <br/>
@@ -30,24 +30,23 @@
             {% for user in users %}
             <tr>
                 <!-- content for table based on how many users are in the database -->
-                <th>{{user.fname}}</th>
-                <th>{{user.lname}}</th>
-                <th>{{user.username}}</th>
-                <th>{{user.email}}</th>
-                <th>{{user.role}}</th>
+                <td>{{user.fname}}</td>
+                <td>{{user.lname}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.role}}</td>
                 <!-- managing users and their roles / permissions or removing users from the website database -->
                 <th>
                     <a href="/update-user/{{user.id}}">
-                        <button  type="button" class="btn btn-primary">Edit</button>
+                        <button type="button" class="btn btn-primary">Edit</button>
                     </a>
                     <a href="/delete-user/{{user.id}}">
-                        <button  type="button" class="btn btn-danger">Remove</button>
+                        <button type="button" class="btn btn-danger">Remove</button>
                     </a>
                 </th>
             </tr>
             {% endfor %}
         </table>
-
   </div>
 
   {% endblock %}
