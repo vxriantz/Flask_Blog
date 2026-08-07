@@ -2,7 +2,7 @@
 # import external libraries
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
-from datetime import datetime, date, timedelta
+from datetime import datetime, timezone
 
 # import database
 from . import db
@@ -132,7 +132,8 @@ def create_post():
         elif not content:
             flash('Post Cannot Be Empty', category='error')
         else:
-            post = Post(title=title, content=content, author=current_user.id)
+            current_utc_time = datetime.now(timezone.utc)
+            post = Post(title=title, content=content, author=current_user.id, date_created=current_utc_time)
             db.session.add(post)
             db.session.commit()
             flash('Post Created!', category='success')

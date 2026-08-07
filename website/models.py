@@ -1,6 +1,7 @@
 from . import db
 from sqlalchemy.sql import func
 from flask_login import UserMixin
+from zoneinfo import ZoneInfo
 
 
 
@@ -31,6 +32,13 @@ class Post(db.Model):
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
     comments = db.relationship('Comment', backref='post', cascade="all, delete-orphan")
     likes = db.relationship('Like', backref='post', cascade="all, delete-orphan")
+    @property
+    def nz_date_created(self):
+        if self.date_created.tzinfo is None:
+            utc = self.date_created.replace(tzinfo=ZoneInfo("UTC"))
+        else:
+            utc = self.date_created
+        return utc.astimezone(ZoneInfo("Pacific/Auckland"))
 
 
 
@@ -41,6 +49,13 @@ class Comment(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey('user.id', ondelete="CASCADE"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id', ondelete="CASCADE"), nullable=False)
+    @property
+    def nz_date_created(self):
+        if self.date_created.tzinfo is None:
+            utc = self.date_created.replace(tzinfo=ZoneInfo("UTC"))
+        else:
+            utc = self.date_created
+        return utc.astimezone(ZoneInfo("Pacific/Auckland"))
 
 
 
