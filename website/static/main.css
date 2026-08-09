@@ -308,3 +308,9 @@ form {
     line-height: 1.5;
     margin-bottom: 0.5rem;
 }
+
+.back-button-container {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
