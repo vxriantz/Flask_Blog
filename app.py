@@ -1,4 +1,3 @@
-
 # import the create-app function from __init__.py
 from website import create_app
 

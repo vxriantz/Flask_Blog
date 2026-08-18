@@ -1,3 +1,4 @@
+# import from external libraries
 from . import db
 from sqlalchemy.sql import func
 from flask_login import UserMixin
